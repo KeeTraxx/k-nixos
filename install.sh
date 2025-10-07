@@ -21,21 +21,20 @@ parted -s /dev/$disk mklabel gpt
 
 parted -s /dev/$disk mkpart "EFI" fat32 1MiB 2048MiB
 parted -s /dev/$disk set 1 esp on
-mkfs.fat -F32 /dev/${disk}p1
+mkfs.fat -F32 /dev/disk/by-label/EFI
 
-parted -s /dev/$disk mkpart linuxswap 2048MiB 8192MiB
-mkswap /dev/${disk}p2
-swapon /dev/${disk}p2
+parted -s /dev/$disk mkpart "swap" linuxswap 2048MiB 8192MiB
+mkswap /dev/disk/by-label/swap
+swapon /dev/disk/by-label/swap
 
-parted -s /dev/$disk mkpart btrfs 8192MiB 100%
-mkfs.btrfs /dev/${disk}p3
+parted -s /dev/$disk mkpart "main" btrfs 8192MiB 100%
+mkfs.btrfs /dev/disk/by-label/main
 
-mount /dev/${disk}p3 /mnt
+mount /dev/disk/by-label/main /mnt
 mkdir /mnt/boot
-mount /dev/${disk}p1 /mnt/boot
+mount /dev/disk/by-label/EFI /mnt/boot
 
 nixos-generate-config --root /mnt
-
 
 # hack to make nixos-install work
 ln -s /mnt/etc/nixos/hardware-configuration.nix /etc/nixos/hardware-configuration.nix
