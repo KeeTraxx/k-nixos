@@ -34,4 +34,5 @@
   virtualisation.docker.enable = true;
   virtualisation.docker.storageDriver = "btrfs";
 
+  services.envfs.enable = true;
 }

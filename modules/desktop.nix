@@ -56,7 +56,7 @@
     ];
 
    i18n.inputMethod = {
-     enabled = "fcitx5";
+     type = "fcitx5";
      fcitx5.addons = with pkgs; [
        kdePackages.fcitx5-qt
        fcitx5-mozc
@@ -75,6 +75,6 @@
     #jack.enable = true;
   };
 
-  fonts.packages = builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerdfonts);
+  fonts.packages = []  ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 
 }
