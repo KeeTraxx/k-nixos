@@ -5,6 +5,7 @@
   system.stateVersion = "25.05"; # Did you read the comment?
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  time.timeZone = "Europe/Zurich";
 
   programs.fish.enable = true;
   programs.wireshark.enable = true;
