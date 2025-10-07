@@ -48,4 +48,10 @@ nixos-generate-config --root /mnt
 # hack to make nixos-install work
 ln -s /mnt/etc/nixos/hardware-configuration.nix /etc/nixos/hardware-configuration.nix
 
-echo "START INSTALL: nixos-install --flake .#<HOSTNAME> --impure"
+read -p "Ready to run nixos-install. Continue? (y/n): " confirm
+if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
+    sudo nixos-install --flake .#desktop --impure
+else
+    echo "Installation cancelled."
+    exit 1
+fi
