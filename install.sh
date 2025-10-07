@@ -18,15 +18,25 @@ fi
 
 # WARNING: destructive
 parted -s /dev/$disk mklabel gpt
-EFI_PARTITION=$(parted -m /dev/$disk mkpart "EFI" fat32 1MiB 2048MiB | tail -n 1 | cut -d: -f1)
+parted -s /dev/$disk mkpart "EFI" fat32 1MiB 2048MiB
 parted -s /dev/$disk set 1 esp on
-mkfs.fat -F32 /dev/$EFI_PARTITION
+parted -s /dev/$disk mkpart "linuxswap" linux-swap 2048MiB 8192MiB
+parted -s /dev/$disk mkpart "main" btrfs 8192MiB 100%
 
-SWAP_PARTITION=$(parted -m /dev/$disk mkpart linuxswap 2048MiB 8192MiB | tail -n 1 | cut -d: -f1)
+# Determine partition naming scheme
+if echo "$disk" | grep -q "nvme\|mmcblk"; then
+    PART_PREFIX="${disk}p"
+else
+    PART_PREFIX="$disk"
+fi
+
+EFI_PARTITION="${PART_PREFIX}1"
+SWAP_PARTITION="${PART_PREFIX}2"
+MAIN_PARTITION="${PART_PREFIX}3"
+
+mkfs.fat -F32 /dev/$EFI_PARTITION
 mkswap /dev/$SWAP_PARTITION
 swapon /dev/$SWAP_PARTITION
-
-MAIN_PARTITION=$(parted -m /dev/$disk mkpart "main" btrfs 8192MiB 100% | tail -n 1 | cut -d: -f1)
 mkfs.btrfs /dev/$MAIN_PARTITION
 
 mount /dev/$MAIN_PARTITION /mnt
