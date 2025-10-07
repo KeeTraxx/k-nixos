@@ -18,21 +18,20 @@ fi
 
 # WARNING: destructive
 parted -s /dev/$disk mklabel gpt
-
-parted -s /dev/$disk mkpart "EFI" fat32 1MiB 2048MiB
+EFI_PARTITION=$(parted -m /dev/$disk mkpart "EFI" fat32 1MiB 2048MiB | tail -n 1 | cut -d: -f1)
 parted -s /dev/$disk set 1 esp on
-mkfs.fat -F32 /dev/disk/by-label/EFI
+mkfs.fat -F32 /dev/$EFI_PARTITION
 
-parted -s /dev/$disk mkpart "swap" linuxswap 2048MiB 8192MiB
-mkswap /dev/disk/by-label/swap
-swapon /dev/disk/by-label/swap
+SWAP_PARTITION=$(parted -m /dev/$disk mkpart linuxswap 2048MiB 8192MiB | tail -n 1 | cut -d: -f1)
+mkswap /dev/$SWAP_PARTITION
+swapon /dev/$SWAP_PARTITION
 
-parted -s /dev/$disk mkpart "main" btrfs 8192MiB 100%
-mkfs.btrfs /dev/disk/by-label/main
+MAIN_PARTITION=$(parted -m /dev/$disk mkpart "main" btrfs 8192MiB 100% | tail -n 1 | cut -d: -f1)
+mkfs.btrfs /dev/$MAIN_PARTITION
 
-mount /dev/disk/by-label/main /mnt
+mount /dev/$MAIN_PARTITION /mnt
 mkdir /mnt/boot
-mount /dev/disk/by-label/EFI /mnt/boot
+mount /dev/$EFI_PARTITION /mnt/boot
 
 nixos-generate-config --root /mnt
 
