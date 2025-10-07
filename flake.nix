@@ -15,10 +15,11 @@
       home-manager
     }:
     {
-    nixosConfigurations.t-11 = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.desktop = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        ./hosts/t-11/configuration.nix
+        ./hosts/t-11.nix
+        ./type/desktop/configuration.nix
         home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

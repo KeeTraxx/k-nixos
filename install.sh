@@ -40,4 +40,4 @@ nixos-generate-config --root /mnt
 # hack to make nixos-install work
 ln -s /mnt/etc/nixos/hardware-configuration.nix /etc/nixos/hardware-configuration.nix
 
-echo "START INSTALL: nixos-install --flake .#<HOSTNAME>"
+echo "START INSTALL: nixos-install --flake .#<HOSTNAME> --impure"
