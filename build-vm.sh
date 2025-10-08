@@ -1,0 +1,1 @@
+nixos-rebuild build-vm --flake .#t-11
