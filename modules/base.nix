@@ -1,8 +1,18 @@
 { config, pkgs, ... }:
 
 {
+  # never change this once you set it for the first time
+  system.stateVersion = "25.05";
 
-  system.stateVersion = "25.05"; # Did you read the comment?
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  # Configure console keymap
+  console.keyMap = "sg";
+
+
+
+  # allow unfree packages (steam, nvidia, vscode, etc.)
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   time.timeZone = "Europe/Zurich";
@@ -19,9 +29,11 @@
   programs.command-not-found.enable = true;
   networking.networkmanager.enable = true;
   networking.networkmanager.plugins = with pkgs; [
-      networkmanager-openvpn
-    ];
+    networkmanager-openvpn
+  ];
+
   services.openssh.enable = true;
+
   environment.systemPackages = with pkgs;
   [
     awscli2
@@ -35,6 +47,8 @@
   virtualisation.docker.enable = true;
   virtualisation.docker.storageDriver = "btrfs";
 
+  # makes all current binaries available under /bin and /usr/bin
+  # useful for some scripts that use #!/bin/sh or similar instead of #!/usr/bin/env sh
   services.envfs.enable = true;
 
   # Automatic garbage collection

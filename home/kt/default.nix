@@ -6,6 +6,7 @@
     userName = "Khôi Tran";
   };
 
+  # sets up ./config/foot/foot.ini
   programs.foot = {
     enable = true;
     settings = {
@@ -20,14 +21,16 @@
         hide-when-typing = "yes";
       };
     };
-
   };
 
+  # copies entire .config directory
   home.file.".config" = {
     source = ./.config;
     recursive = true;
   };
 
+  # automatically switch to fish when opening a terminal
+  # see: https://nixos.wiki/wiki/Fish
   programs.bash = {
     initExtra = ''
       if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
