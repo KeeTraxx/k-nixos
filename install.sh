@@ -1,10 +1,5 @@
 #!/bin/sh
 
-# Reconnect stdin to the terminal if running from curl | sh
-if [ ! -t 0 ]; then
-    exec < /dev/tty
-fi
-
 # Check if running in NixOS installation media
 if [ ! -f /etc/NIXOS ]; then
     echo "Error: This script must be run from NixOS installation media."
@@ -13,8 +8,8 @@ fi
 
 # Check if running as root, if not, re-execute with sudo
 if [ "$(id -u)" -ne 0 ]; then
-    echo "This script requires root privileges. Re-executing with sudo..."
-    exec sudo "$0" "$@"
+    echo "This script requires root privileges."
+    exit 1
 fi
 
 # Check if hardware-configuration.nix already exists
