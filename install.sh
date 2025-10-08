@@ -6,10 +6,10 @@ if [ ! -f /etc/NIXOS ]; then
     exit 1
 fi
 
-# Check if running as root
+# Check if running as root, if not, re-execute with sudo
 if [ "$(id -u)" -ne 0 ]; then
-    echo "Error: This script must be run as root (use sudo ./install.sh)"
-    exit 1
+    echo "This script requires root privileges. Re-executing with sudo..."
+    exec sudo "$0" "$@"
 fi
 
 # Check if hardware-configuration.nix already exists
