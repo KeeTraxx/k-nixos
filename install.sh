@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# Check if running in NixOS installation media
+if [ ! -f /etc/NIXOS ]; then
+    echo "Error: This script must be run from NixOS installation media."
+    exit 1
+fi
 
 # List all available disks
 echo "Available disks:"
@@ -55,3 +60,27 @@ else
     echo "Installation cancelled."
     exit 1
 fi
+
+# Function to set password for a user
+set_user_password() {
+    local username="$1"
+    if [ -n "$username" ]; then
+        echo "Setting password for $username"
+        nixos-enter --root /mnt -c "passwd $username"
+    fi
+}
+
+# Set initial passwords for users
+echo ""
+echo "Setting initial passwords for users..."
+read -p "Enter username to set password for: " username
+set_user_password "$username"
+
+read -p "Set password for another user? (y/n): " another
+while [ "$another" = "y" ] || [ "$another" = "Y" ]; do
+    read -p "Enter username: " username
+    set_user_password "$username"
+    read -p "Set password for another user? (y/n): " another
+done
+
+echo "Password setup complete."
