@@ -69,7 +69,12 @@ ln -s /mnt/etc/nixos/hardware-configuration.nix /etc/nixos/hardware-configuratio
 
 read -p "Ready to run nixos-install. Continue? (y/n): " confirm
 if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
-    nixos-install --flake .#desktop --impure
+    echo "Running nixos-install..."
+    if [ -e .git ]; then
+        nixos-install --flake --impure .#t-11
+    else
+        nixos-install --flake --impure https://github.com/KeeTraxx/k-nixos#t-11
+    fi
 else
     echo "Installation cancelled."
     exit 1
