@@ -6,6 +6,12 @@ if [ ! -f /etc/NIXOS ]; then
     exit 1
 fi
 
+# Check if running as root
+if [ "$(id -u)" -ne 0 ]; then
+    echo "Error: This script must be run as root (use sudo ./install.sh)"
+    exit 1
+fi
+
 # List all available disks
 echo "Available disks:"
 lsblk -d -o NAME,SIZE,MODEL | grep -v "loop"
@@ -55,7 +61,7 @@ ln -s /mnt/etc/nixos/hardware-configuration.nix /etc/nixos/hardware-configuratio
 
 read -p "Ready to run nixos-install. Continue? (y/n): " confirm
 if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
-    sudo nixos-install --flake .#desktop --impure
+    nixos-install --flake .#desktop --impure
 else
     echo "Installation cancelled."
     exit 1
