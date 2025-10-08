@@ -73,7 +73,7 @@ if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
     if [ -e .git ]; then
         nixos-install --flake .#t-11 --impure
     else
-        nixos-install --flake github:KeeTraxx/k-nixos#t-11 --impure
+        nixos-install --flake github:KeeTraxx/k-nixos#t-11 --impure --no-write-lock-file
     fi
 else
     echo "Installation cancelled."
