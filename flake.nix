@@ -23,6 +23,7 @@
       modules = [
         ./hosts/t-11.nix
         ./type/desktop.nix
+        home-manager.nixosModules.home-manager
         ./home
       ];
     };
