@@ -18,7 +18,7 @@
       home-manager
     }:
     {
-    nixosConfigurations.desktop = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.t-11 = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         ./hosts/t-11.nix
