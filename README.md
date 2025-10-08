@@ -7,6 +7,3 @@ Nix configuration to bootstrap a NixOS machine.
 1. Boot VM with nixos-minimal iso from https://nixos.org/download/
 2. Wait for terminal
 3. `curl https://raw.githubusercontent.com/KeeTraxx/k-nixos/master/install.sh | sh`
-3. Check out k-nixos `git clone https://github.com/KeeTraxx/k-nixos.git`
-4. `cd k-nixos`
-5. `sudo ./install.sh`

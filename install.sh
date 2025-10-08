@@ -71,9 +71,9 @@ read -p "Ready to run nixos-install. Continue? (y/n): " confirm
 if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
     echo "Running nixos-install..."
     if [ -e .git ]; then
-        nixos-install --flake --impure .#t-11
+        nixos-install --flake .#t-11 --impure
     else
-        nixos-install --flake --impure https://github.com/KeeTraxx/k-nixos#t-11
+        nixos-install --flake github:KeeTraxx/k-nixos#t-11 --impure
     fi
 else
     echo "Installation cancelled."
