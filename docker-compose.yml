@@ -13,7 +13,8 @@ services:
     cap_add:
       - NET_ADMIN
     ports:
-      - 8006:8006
+      - 8006:8006 # Browser access to VM console
+      - 8022:8022 # SSH access to VM
     volumes:
       - ./qemu:/storage
       - ./nixos-minimal-25.05.810859.20c4598c84a6-x86_64-linux.iso:/boot.iso
