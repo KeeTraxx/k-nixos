@@ -36,4 +36,11 @@
   virtualisation.docker.storageDriver = "btrfs";
 
   services.envfs.enable = true;
+
+  # Automatic garbage collection
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";  # Keep generations from last 30 days
+  };
 }
