@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# Reconnect stdin to the terminal if running from curl | sh
+if [ ! -t 0 ]; then
+    exec < /dev/tty
+fi
+
 # Check if running in NixOS installation media
 if [ ! -f /etc/NIXOS ]; then
     echo "Error: This script must be run from NixOS installation media."
