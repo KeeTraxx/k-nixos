@@ -1,15 +1,4 @@
-{ config, lib, pkgs, ... }:
-let
-  # Stable (your current system)
-  stable = pkgs;
-
-  # Import nixos-unstable for new NVIDIA drivers
-  unstable = import (fetchTarball {
-    url = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
-  }) {
-    config.allowUnfree = true;  # needed for NVIDIA
-  };
-in
+{ config, lib, pkgs, nixpkgs-unstable, ... }:
 {
 
   # Enable OpenGL
@@ -48,6 +37,6 @@ in
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = unstable.config.boot.kernelPackages.nvidiaPackages.beta;
+    package = nixpkgs-unstable.config.boot.kernelPackages.nvidiaPackages.beta;
   };
 }
