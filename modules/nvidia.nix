@@ -44,6 +44,6 @@ in
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = pkgs-unstable.nvidiaPackages.stable;
+    package = pkgs-unstable.linuxPackages_latest.nvidiaPackages.stable;
   };
 }
