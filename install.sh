@@ -67,13 +67,36 @@ fi
 # hack to make nixos-install work
 ln -s /mnt/etc/nixos/hardware-configuration.nix /etc/nixos/hardware-configuration.nix
 
+# Show available configurations and ask user to select
+echo ""
+echo "Available NixOS configurations:"
+echo "  1) t-11 (desktop)"
+echo "  2) k4080 (desktop-nvidia)"
+read -p "Select configuration (1 or 2): " config_choice
+
+case "$config_choice" in
+    1)
+        FLAKE_CONFIG="t-11"
+        ;;
+    2)
+        FLAKE_CONFIG="k4080"
+        ;;
+    *)
+        echo "Invalid selection. Exiting."
+        exit 1
+        ;;
+esac
+
+echo "Selected configuration: $FLAKE_CONFIG"
+echo ""
+
 read -p "Ready to run nixos-install. Continue? (y/n): " confirm
 if [ "$confirm" = "y" ] || [ "$confirm" = "Y" ]; then
     echo "Running nixos-install..."
     if [ -e .git ]; then
-        nixos-install --flake .#t-11 --impure
+        nixos-install --flake .#$FLAKE_CONFIG --impure
     else
-        nixos-install --flake github:KeeTraxx/k-nixos#t-11 --impure --no-write-lock-file
+        nixos-install --flake github:KeeTraxx/k-nixos#$FLAKE_CONFIG --impure --no-write-lock-file
     fi
 else
     echo "Installation cancelled."
