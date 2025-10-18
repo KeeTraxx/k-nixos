@@ -27,5 +27,16 @@
         ./home
       ];
     };
+
+    nixosConfigurations.k4080 = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        ./hosts/k4080.nix
+        ./type/desktop-nvidia.nix
+        home-manager.nixosModules.home-manager
+        ./home
+      ];
+    };
+
   };
 }

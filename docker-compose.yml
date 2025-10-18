@@ -17,6 +17,7 @@ services:
       - 8022:22 # SSH access to VM
     volumes:
       - ./qemu:/storage
-      - ./nixos-minimal-25.05.810859.20c4598c84a6-x86_64-linux.iso:/boot.iso
+      - ./nixos-minimal-25.05.811339.98ff3f9af268-x86_64-linux.iso:/boot.iso
+      - ./:/shared
     restart: no
     stop_grace_period: 2m
