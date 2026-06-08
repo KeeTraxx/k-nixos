@@ -31,6 +31,9 @@
     wget
     curl
     htop
+    (writeShellScriptBin "k-nixos-update" ''
+      exec nixos-rebuild switch --flake "github:KeeTraxx/k-nixos#$(hostname)"
+    '')
   ];
 
   nixpkgs.config.allowUnfree = true;

@@ -120,6 +120,25 @@ imports = [
 ];
 ```
 
+## Updating flake.lock
+
+`flake.lock` pins every input (nixpkgs, home-manager, disko) to an exact commit. Update it to pull in the latest packages:
+
+```bash
+nix flake update
+git add flake.lock
+git commit -m "Update flake.lock"
+git push
+```
+
+Run `scripts/update.sh` afterwards to deploy the new packages to your hosts.
+
+To update a single input without touching the rest:
+
+```bash
+nix flake update nixpkgs
+```
+
 ## Updating a host
 
 ```bash
