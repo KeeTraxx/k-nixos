@@ -8,6 +8,7 @@
         "Alt+F4"
         "Meta+Shift+Q"
       ];
+      "services/foot.desktop"._launch = "Meta+Return";
       "services/org.kde.spectacle.desktop".RectangularRegionScreenShot = "Meta+Shift+S";
     };
     configFile = {
