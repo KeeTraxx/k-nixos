@@ -2,12 +2,9 @@
   home.stateVersion = "26.05";
 
   home.packages = with pkgs; [
-    ripgrep
-    fd
-    bat
-    eza
-    fzf
-    jq
+    claude-code
+    talosctl
+
   ];
 
   programs.git = {
@@ -17,10 +14,10 @@
       user.email = "kt@compile.ch";
       init.defaultBranch = "main";
       push.autoSetupRemote = true;
+      pull.rebase = true;
+      rebase.autoStash = true;
     };
   };
 
   programs.fish.enable = true;
-
-  programs.starship.enable = true;
 }

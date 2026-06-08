@@ -1,6 +1,9 @@
 { pkgs, lib, ... }: {
   nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     auto-optimise-store = true;
   };
 
@@ -28,23 +31,66 @@
   # Only manage the root password when the secrets file has been deployed
   # (i.e. after the first install.sh run). This prevents activation failures
   # on machines that predate the hashedPasswordFile setup.
-  users.users.root.hashedPasswordFile =
-    lib.mkIf (builtins.pathExists /etc/secrets/users/root)
-      "/etc/secrets/users/root";
+  users.users.root.hashedPasswordFile = lib.mkIf (builtins.pathExists /etc/secrets/users/root) "/etc/secrets/users/root";
 
   environment.systemPackages = with pkgs; [
-    git
-    vim
-    wget
-    curl
+    # Multimedia and Utilities
+    aria2 # better wget
+
+    # cli tools
     htop
-    (writeShellScriptBin "k-nixos-update" ''
-      if [ "$(id -u)" -ne 0 ]; then
-        exec sudo "$0" "$@"
-      fi
-      export PATH="/run/current-system/sw/bin:$PATH"
-      exec nixos-rebuild switch --flake "github:KeeTraxx/k-nixos#$(hostname)"
-    '')
+    p7zip
+    bat
+    mc
+    dust # better du
+    ncdu # du with tui
+    dog # better dig
+    rsync
+    ffmpeg
+    imagemagick
+    nmap # ncat for gdscript language server
+    sops # encryption tool for secrets
+    age # key generator for sops
+    claude-code
+    exiftool # exiftool
+    poppler-utils # pdfinfo, pdffonts
+    yq # yaml query tool
+    jq # json query tool
+    whois # whois lookup tool
+    qrencode # qr code generator
+
+    # Development Tools
+    ripgrep # fast recursive grep. run with rgrep
+    just # command runner
+    rustup
+    jq
+    sqlite
+    gh # github cli
+    pipenv
+    uv # python package manager
+    pylint # python linter
+
+    # Infrastructure and Cloud Tools
+    opentofu
+    terraform
+    terramate
+    kubectl
+    kubectx
+    kubeseal
+    kube-linter
+    k9s
+    tflint
+    argocd
+    summon
+    awscli2
+    kubernetes-helm
+    talosctl
+
+    # nix specific
+    nixd
+    nil
+    nvd
+    nh
   ];
 
   nixpkgs.config.allowUnfree = true;
