@@ -19,7 +19,16 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, disko, plasma-manager, ... }:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      nixpkgs-unstable,
+      home-manager,
+      disko,
+      plasma-manager,
+      ...
+    }:
     let
       lib = nixpkgs.lib;
 
@@ -28,7 +37,8 @@
         lib.filterAttrs (_: type: type == "directory") (builtins.readDir ./hosts)
       );
 
-      mkHost = hostname:
+      mkHost =
+        hostname:
         lib.nixosSystem {
           modules = [
             disko.nixosModules.disko
@@ -38,7 +48,7 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ];
+              home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
               # Expose unstable packages as pkgs.unstable everywhere,
               # including home-manager (via useGlobalPkgs).
               nixpkgs.overlays = [

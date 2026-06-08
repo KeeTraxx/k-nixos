@@ -33,16 +33,5 @@
       iconTheme = "breeze-dark";
       # wallpaper = "~/Pictures/wallpaper.jpg"; # replace with your wallpaper path
     };
-
-    fonts = {
-      general = {
-        family = "Noto Sans";
-        pointSize = 10;
-      };
-      fixedWidth = {
-        family = "JetBrains Mono";
-        pointSize = 10;
-      };
-    };
   };
 }
