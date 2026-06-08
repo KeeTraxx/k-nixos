@@ -1,0 +1,5 @@
+result
+*.iso
+nixos-vm
+# Ignore hardware-configuration.nix only at repo root (per-host ones are committed)
+/hardware-configuration.nix

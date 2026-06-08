@@ -1,0 +1,17 @@
+services:
+  nixos-vm:
+    image: qemux/qemu
+    container_name: nixos-vm
+    environment:
+      BOOT: "nixos"
+    devices:
+      - /dev/kvm
+      - /dev/net/tun
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - 8006:8006
+    volumes:
+      - ./nixos-vm:/storage
+    restart: no
+    stop_grace_period: 2m
