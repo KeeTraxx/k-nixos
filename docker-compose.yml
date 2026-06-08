@@ -3,6 +3,8 @@ services:
     image: qemux/qemu
     container_name: nixos-vm
     environment:
+      RAM_SIZE: "8G"
+      CPU_CORES: "4"
       BOOT: "https://releases.nixos.org/nixos/26.05/nixos-26.05.1550.bd0ff2d3eac2/nixos-minimal-26.05.1550.bd0ff2d3eac2-x86_64-linux.iso"
     devices:
       - /dev/kvm

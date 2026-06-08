@@ -2,9 +2,8 @@
   home.stateVersion = "26.05";
 
   home.packages = with pkgs; [
-    claude-code
+    unstable.claude-code  # pinned to nixos-unstable (see flake.nix overlay)
     talosctl
-
   ];
 
   programs.git = {

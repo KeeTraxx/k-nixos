@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -13,7 +14,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, disko, ... }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, disko, ... }:
     let
       lib = nixpkgs.lib;
 
@@ -32,6 +33,13 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
+              # Expose unstable packages as pkgs.unstable everywhere,
+              # including home-manager (via useGlobalPkgs).
+              nixpkgs.overlays = [
+                (final: _: {
+                  unstable = nixpkgs-unstable.legacyPackages.${final.system};
+                })
+              ];
             }
           ];
         };
