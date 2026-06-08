@@ -4,6 +4,7 @@
     description = "Khôi Tran";
     extraGroups = [ "wheel" "networkmanager" "docker" ];
     shell = pkgs.fish;
+    hashedPasswordFile = "/etc/secrets/users/kt";
   };
 
   programs.fish.enable = true;

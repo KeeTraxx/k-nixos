@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  home.stateVersion = "24.11";
+  home.stateVersion = "26.05";
 
   home.packages = with pkgs; [
     ripgrep
@@ -12,9 +12,9 @@
 
   programs.git = {
     enable = true;
-    userName = "Khôi Tran";
-    userEmail = "kt@compile.ch";
-    extraConfig = {
+    settings = {
+      user.name = "Khôi Tran";
+      user.email = "kt@compile.ch";
       init.defaultBranch = "main";
       push.autoSetupRemote = true;
     };

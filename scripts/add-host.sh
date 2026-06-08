@@ -79,7 +79,7 @@ cat > "$HOST_DIR/default.nix" << EOF
 
   networking.networkmanager.enable = true;
 
-  system.stateVersion = "24.11";
+  system.stateVersion = "26.05";
 }
 EOF
 

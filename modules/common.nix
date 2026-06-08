@@ -30,4 +30,6 @@
   ];
 
   nixpkgs.config.allowUnfree = true;
+
+  users.users.root.hashedPasswordFile = "/etc/secrets/users/root";
 }
