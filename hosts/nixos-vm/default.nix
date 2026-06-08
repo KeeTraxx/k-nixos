@@ -3,6 +3,7 @@
     ./disk.nix
     ./hardware-configuration.nix
     ../../modules/common.nix
+    ../../modules/kde.nix
     ../../users/kt/default.nix
   ];
 
