@@ -37,7 +37,7 @@ if ! git -C "$REPO_ROOT" diff --quiet || ! git -C "$REPO_ROOT" diff --cached --q
 fi
 
 # ── Update ────────────────────────────────────────────────────────────────────
-SSH_OPTS="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+SSH_OPTS="-t -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
 [[ -n "$SSH_PORT" ]] && SSH_OPTS="$SSH_OPTS -p $SSH_PORT"
 
 echo "Updating '$HOSTNAME' on $TARGET ..."
