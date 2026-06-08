@@ -12,9 +12,14 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, disko, ... }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, disko, plasma-manager, ... }:
     let
       lib = nixpkgs.lib;
 
@@ -33,6 +38,7 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
+              home-manager.sharedModules = [ plasma-manager.homeManagerModules.plasma-manager ];
               # Expose unstable packages as pkgs.unstable everywhere,
               # including home-manager (via useGlobalPkgs).
               nixpkgs.overlays = [

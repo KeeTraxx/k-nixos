@@ -2,7 +2,7 @@
   home.stateVersion = "26.05";
 
   home.packages = with pkgs; [
-    unstable.claude-code  # pinned to nixos-unstable (see flake.nix overlay)
+    unstable.claude-code # pinned to nixos-unstable (see flake.nix overlay)
     talosctl
   ];
 
@@ -19,4 +19,30 @@
   };
 
   programs.fish.enable = true;
+
+  programs.plasma = {
+    enable = true;
+
+    workspace = {
+      theme = "breeze-dark";
+      colorScheme = "BreezeDark";
+      cursor = {
+        theme = "breeze_cursors";
+        size = 24;
+      };
+      iconTheme = "breeze-dark";
+      # wallpaper = "~/Pictures/wallpaper.jpg"; # replace with your wallpaper path
+    };
+
+    fonts = {
+      general = {
+        family = "Noto Sans";
+        pointSize = 10;
+      };
+      fixedWidth = {
+        family = "JetBrains Mono";
+        pointSize = 10;
+      };
+    };
+  };
 }
