@@ -44,4 +44,4 @@ SSH_OPTS="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
 echo "Updating '$HOSTNAME' on $TARGET from $FLAKE_REF ..."
 # shellcheck disable=SC2086
 ssh $SSH_OPTS root@"$TARGET" \
-  "nixos-rebuild switch --flake '${FLAKE_REF}#${HOSTNAME}'"
+  "nixos-rebuild switch --flake '${FLAKE_REF}#${HOSTNAME}' --refresh"
