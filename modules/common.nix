@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
     auto-optimise-store = true;
@@ -25,6 +25,13 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILWRyI1E93f4fkPc0kNBwD1m+wLIB3kxwsXLM3QEJ9Ys kt@k4080"
   ];
 
+  # Only manage the root password when the secrets file has been deployed
+  # (i.e. after the first install.sh run). This prevents activation failures
+  # on machines that predate the hashedPasswordFile setup.
+  users.users.root.hashedPasswordFile =
+    lib.mkIf (builtins.pathExists /etc/secrets/users/root)
+      "/etc/secrets/users/root";
+
   environment.systemPackages = with pkgs; [
     git
     vim
@@ -32,11 +39,13 @@
     curl
     htop
     (writeShellScriptBin "k-nixos-update" ''
+      if [ "$(id -u)" -ne 0 ]; then
+        exec sudo "$0" "$@"
+      fi
+      export PATH="/run/current-system/sw/bin:$PATH"
       exec nixos-rebuild switch --flake "github:KeeTraxx/k-nixos#$(hostname)"
     '')
   ];
 
   nixpkgs.config.allowUnfree = true;
-
-  users.users.root.hashedPasswordFile = "/etc/secrets/users/root";
 }
