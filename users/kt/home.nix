@@ -1,9 +1,11 @@
 { pkgs, ... }: {
+  imports = [ ./plasma-manager-config.nix ];
   home.stateVersion = "26.05";
 
   home.packages = with pkgs; [
     unstable.claude-code # pinned to nixos-unstable (see flake.nix overlay)
     talosctl
+    foot
   ];
 
   programs.git = {
