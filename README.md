@@ -123,10 +123,12 @@ imports = [
 ## Updating a host
 
 ```bash
-# On the host itself
-sudo nixos-rebuild switch --flake github:keetraxx/k-nixos#<hostname>
+scripts/update.sh [--port PORT] <hostname> <target-ip>
+```
 
-# Remotely
-nixos-rebuild switch --flake github:keetraxx/k-nixos#<hostname> \
-  --target-host root@<ip> --build-host localhost
+Builds the new system closure locally and activates it on the remote host over SSH. The target does not need Nix installed.
+
+```bash
+scripts/update.sh myhost 192.168.1.42
+scripts/update.sh --port 2222 myhost 192.168.1.42
 ```

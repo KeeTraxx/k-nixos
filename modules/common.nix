@@ -17,9 +17,13 @@
     enable = true;
     settings = {
       PasswordAuthentication = false;
-      PermitRootLogin = "no";
+      PermitRootLogin = "prohibit-password";
     };
   };
+
+  users.users.root.openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILWRyI1E93f4fkPc0kNBwD1m+wLIB3kxwsXLM3QEJ9Ys kt@k4080"
+  ];
 
   environment.systemPackages = with pkgs; [
     git
