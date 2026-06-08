@@ -37,7 +37,10 @@
               # including home-manager (via useGlobalPkgs).
               nixpkgs.overlays = [
                 (final: _: {
-                  unstable = nixpkgs-unstable.legacyPackages.${final.system};
+                  unstable = import nixpkgs-unstable {
+                    system = final.system;
+                    config.allowUnfree = true;
+                  };
                 })
               ];
             }
