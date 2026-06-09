@@ -5,14 +5,17 @@
     ./fish.nix
     ./rust.nix
     ../../modules/swisstopo/swisstopo.nix
+    ./foot.nix
   ];
   home.stateVersion = "26.05";
 
   home.packages = with pkgs; [
     unstable.claude-code # pinned to nixos-unstable (see flake.nix overlay)
     talosctl
-    foot
     rustup
+    keepassxc
+    jetbrains.idea-oss
+
   ];
 
   programs.less.enable = true;

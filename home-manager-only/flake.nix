@@ -13,6 +13,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+    nixgl.url = "github:KeeTraxx/nixgl/fix-nvidia-kernel-param";
+    nixgl.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -21,13 +23,16 @@
       nixpkgs-unstable,
       home-manager,
       plasma-manager,
+      nixgl,
       ...
     }:
     let
+      system = "x86_64-linux";
       pkgs = import nixpkgs {
-        system = "x86_64-linux";
+        inherit system;
         config.allowUnfree = true;
         overlays = [
+          nixgl.overlays.default
           (final: _: {
             unstable = import nixpkgs-unstable {
               system = final.stdenv.hostPlatform.system;
@@ -40,6 +45,17 @@
     {
       homeConfigurations."kt" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
+        extraSpecialArgs = {
+          nixGLWrap = pkg: pkgs.runCommand "${pkg.name}-nixgl" { } ''
+            mkdir -p $out/bin
+            for bin in ${pkg}/bin/*; do
+              name=$(basename $bin)
+              echo "#!${pkgs.bash}/bin/bash" > $out/bin/$name
+              echo "exec ${pkgs.nixgl.auto.nixGLDefault}/bin/nixGLDefault $bin \"\$@\"" >> $out/bin/$name
+              chmod +x $out/bin/$name
+            done
+          '';
+        };
         modules = [
           plasma-manager.homeModules.plasma-manager
           ../users/kt/home.nix
