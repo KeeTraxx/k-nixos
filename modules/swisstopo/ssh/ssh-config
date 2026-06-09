@@ -1,0 +1,69 @@
+Host vpc-mf0-dev-1 vpc-legacy-web-client-dev
+    HostName 10.220.4.246
+    HostkeyAlgorithms +ssh-rsa
+    PubkeyAcceptedAlgorithms +ssh-rsa
+
+# distributing geodata in the vpc
+Host vpc-geodatasync-prod geodatasync.prod.bgdi.ch
+    HostName geodatasync.prod.bgdi.ch
+
+# distribute geodata in the BVN
+Host lt-data-1-dev data-1.dev.lt.admin.ch
+    HostName data-1.dev.lt.admin.ch
+
+# k6 load and performance tests
+Host vpc-k6-dev k6-dev k6.bgdi-dev.swisstopo.cloud
+    HostName k6.bgdi-dev.swisstopo.cloud
+    LocalForward 3000 localhost:3000
+
+# testing and developing with the possibility to install stuff
+Host vpc-development-dev development.dev.bgdi.ch
+    HostName development.dev.bgdi.ch
+
+# pg-geodata-replica ro
+Host jumphost-pg-geodata-replica
+    HostName ssh0a.prod.bgdi.ch
+    LocalForward 5432 pg-geodata-replica.bgdi.ch:5432
+
+# pg-geodata-master rw
+Host jumphost-pg-geodata-master
+    HostName ssh0a.prod.bgdi.ch
+    LocalForward 5432 pg-geodata-master.bgdi.ch:5432
+
+# pg bgdi-dev
+Host jumphost-pg-bgdi-dev
+    HostName ssh0a.prod.bgdi.ch
+    LocalForward 5432 bgdi-dev.cdqcxpiq6svf.eu-central-1.rds.amazonaws.com:5432
+
+# pg bgdi-int
+Host jumphost-pg-bgdi-int
+    HostName ssh0a.prod.bgdi.ch
+    LocalForward 5432 bgdi-int.cjmz5jar75xf.eu-central-1.rds.amazonaws.com:5432
+
+# pg bgdi-prod
+Host jumphost-pg-bgdi-prod
+    HostName ssh0a.prod.bgdi.ch
+    LocalForward 5432 bgdi-prod.cjmz5jar75xf.eu-central-1.rds.amazonaws.com:5432
+
+# postgres jump host used to apply changes in postgres DB using terraform in infra-terraform-bgdi
+Host jumphost-pg-4-terraform
+    HostName ssh0a.prod.bgdi.ch
+    LocalForward 15432 bgdi-dev.cdqcxpiq6svf.eu-central-1.rds.amazonaws.com:5432
+    LocalForward 25432 bgdi-int.cjmz5jar75xf.eu-central-1.rds.amazonaws.com:5432
+    LocalForward 35432 bgdi-prod.cjmz5jar75xf.eu-central-1.rds.amazonaws.com:5432
+
+# Jumphost pattern configuration
+# make sure to add all the wildcard patterns for proxyCommand here
+Match  Host 10.220.*,vpc*,!ssh0a.prod.bgdi.ch,*.swisstopo.cloud,*.bgdi.ch
+    ProxyJump ssh0a.prod.bgdi.ch
+
+# global configuration
+Host jumphost-*
+    User lttrk
+    # CheckHostIp no
+    # StrictHostKeyChecking no
+    # UserKnownHostsFile /dev/null
+    ForwardAgent true
+    #AddKeysToAgent true
+    #ServerAliveInterval 120
+    IdentityFile ~/.ssh/lttrk_id_ed25519

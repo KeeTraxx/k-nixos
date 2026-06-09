@@ -4,6 +4,7 @@
     ./git.nix
     ./fish.nix
     ./rust.nix
+    ../../modules/swisstopo/swisstopo.nix
   ];
   home.stateVersion = "26.05";
 
