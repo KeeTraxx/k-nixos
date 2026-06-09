@@ -1,8 +1,10 @@
-{ pkgs, lib, nixGLWrap ? null, ... }:
+{ pkgs, osConfig ? null, ... }:
 {
   programs.foot = {
     enable = true;
-    package = if nixGLWrap != null then nixGLWrap pkgs.foot else pkgs.foot;
+    # On NixOS, OpenGL is managed by the OS — use foot directly.
+    # In standalone home-manager (non-NixOS), nixGLWrap is required for OpenGL.
+    package = if osConfig != null then pkgs.foot else pkgs.nixGLWrap pkgs.foot;
     settings = {
       main = {
         term = "kitty";
