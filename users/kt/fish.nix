@@ -1,5 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
+  xdg.configFile."fish/fish_variables".text = lib.concatStrings [
+    (builtins.readFile ./tide_variables)
+  ];
 
   programs.fish = {
     enable = true;
