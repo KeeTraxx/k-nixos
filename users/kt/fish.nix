@@ -1,8 +1,11 @@
 { pkgs, lib, ... }:
 {
-  xdg.configFile."fish/fish_variables".text = lib.concatStrings [
-    (builtins.readFile ./tide_variables)
-  ];
+  # Tide config goes in conf.d so fish_variables stays writable by other programs
+  # (e.g. `tide configure` and fish itself).
+  # To populate tide.fish: run `set | grep ^tide | awk '{print "set -U "$1" "$2}'`
+  xdg.configFile."fish/conf.d/tide.fish" = lib.mkIf (builtins.pathExists ./tide.fish) {
+    source = ./tide.fish;
+  };
 
   programs.fish = {
     enable = true;
