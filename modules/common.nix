@@ -62,7 +62,6 @@
     # Development Tools
     ripgrep # fast recursive grep. run with rgrep
     just # command runner
-    rustup
     jq
     sqlite
     gh # github cli

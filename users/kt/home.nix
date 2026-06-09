@@ -1,24 +1,21 @@
 { pkgs, ... }: {
-  imports = [ ./plasma-manager-config.nix ];
+  imports = [
+    ./plasma-manager-config.nix
+    ./git.nix
+    ./fish.nix
+    ./rust.nix
+  ];
   home.stateVersion = "26.05";
 
   home.packages = with pkgs; [
     unstable.claude-code # pinned to nixos-unstable (see flake.nix overlay)
     talosctl
     foot
+    rustup
   ];
 
-  programs.git = {
-    enable = true;
-    settings = {
-      user.name = "Khôi Tran";
-      user.email = "kt@compile.ch";
-      init.defaultBranch = "main";
-      push.autoSetupRemote = true;
-      pull.rebase = true;
-      rebase.autoStash = true;
-    };
-  };
+  programs.less.enable = true;
+  programs.htop.enable = true;
 
   programs.fish.enable = true;
 
