@@ -21,3 +21,11 @@ No checkout needed — pull and apply in one command:
 ```bash
 home-manager switch --flake "github:KeeTraxx/k-nixos?dir=home-manager-only#kt"
 ```
+
+## Apply without home-manager installed
+
+If `home-manager` is not on your PATH, use `nix run` to invoke it directly:
+
+```bash
+NIX_CONFIG="experimental-features = nix-command flakes" nix run "github:nix-community/home-manager/release-26.05" -- switch --flake "github:KeeTraxx/k-nixos?dir=home-manager-only#kt"
+```
