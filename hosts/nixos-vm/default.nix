@@ -4,6 +4,7 @@
     ./hardware-configuration.nix
     ../../modules/common.nix
     ../../modules/kde.nix
+    ../../modules/fonts.nix
     ../../users/kt/default.nix
   ];
 
