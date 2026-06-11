@@ -45,17 +45,6 @@
     {
       homeConfigurations."kt" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        extraSpecialArgs = {
-          nixGLWrap = pkg: pkgs.runCommand "${pkg.name}-nixgl" { } ''
-            mkdir -p $out/bin
-            for bin in ${pkg}/bin/*; do
-              name=$(basename $bin)
-              echo "#!${pkgs.bash}/bin/bash" > $out/bin/$name
-              echo "exec ${pkgs.nixgl.auto.nixGLDefault}/bin/nixGLDefault $bin \"\$@\"" >> $out/bin/$name
-              chmod +x $out/bin/$name
-            done
-          '';
-        };
         modules = [
           plasma-manager.homeModules.plasma-manager
           ../users/kt/home.nix
