@@ -55,4 +55,7 @@
   ];
 
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-39.8.10" # required by jetbrains.idea-oss; remove once nixpkgs updates it
+  ];
 }

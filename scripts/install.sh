@@ -52,10 +52,16 @@ ssh_target() {
 
 # ── Auto-detect disk ──────────────────────────────────────────────────────────
 if [[ -z "$DISK" ]]; then
-  echo "No disk specified — detecting first disk on $TARGET ..."
-  DISK=$(ssh_target "lsblk -dpno NAME,TYPE | awk '\$2==\"disk\"{print \$1; exit}'")
-  [[ -n "$DISK" ]] || { echo "Error: could not detect a disk on $TARGET" >&2; exit 1; }
-  echo "Using disk: $DISK"
+  echo "No disk specified — detecting first disk >= 40 GiB on $TARGET ..."
+  # -b: sizes in bytes; filter type==disk and size >= 40 GiB (42949672960 bytes)
+  DISK=$(ssh_target "lsblk -bdpno NAME,TYPE,SIZE | awk '\$2==\"disk\" && \$3+0 >= 42949672960 {print \$1; exit}'")
+  if [[ -z "$DISK" ]]; then
+    echo "Error: no disk >= 40 GiB found on $TARGET. Available disks:" >&2
+    ssh_target "lsblk -dpno NAME,SIZE,TYPE" >&2
+    exit 1
+  fi
+  DISK_GIB=$(ssh_target "lsblk -bdpno SIZE '$DISK'" | awk '{printf "%d", $1/1024/1024/1024}')
+  echo "Using disk: $DISK (${DISK_GIB} GiB)"
   echo ""
 fi
 
@@ -150,7 +156,6 @@ NIXOS_ANYWHERE_ARGS=(
 [[ -n "$SSH_PORT" ]] && NIXOS_ANYWHERE_ARGS+=(--ssh-port "$SSH_PORT")
 
 NIXOS_ANYWHERE_ARGS+=(root@"$TARGET")
-
 nix run github:nix-community/nixos-anywhere -- "${NIXOS_ANYWHERE_ARGS[@]}"
 
 # ── Done ──────────────────────────────────────────────────────────────────────

@@ -4,6 +4,7 @@
     ./hardware-configuration.nix
     ../../modules/common.nix
     ../../users/kt/default.nix
+    ../../users/ft/default.nix
   ];
 
   nixpkgs.hostPlatform.system = "x86_64-linux";
