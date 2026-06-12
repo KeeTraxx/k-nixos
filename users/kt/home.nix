@@ -5,8 +5,10 @@
     ./fish.nix
     ./rust.nix
     ../../modules/swisstopo/swisstopo.nix
+    ../../modules/fonts.nix
     ./foot.nix
     ./desktop.nix
+    ./cli-tools.nix
   ];
   home.stateVersion = "26.05";
 
