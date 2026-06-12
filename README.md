@@ -113,7 +113,7 @@ nix run github:nix-community/nixos-anywhere -- \
 The `home-manager-only/` directory contains a standalone flake that works on any system with Nix installed.
 
 ```bash
-NIX_CONFIG="experimental-features = nix-command flakes" nix run "github:nix-community/home-manager/release-26.05" -- switch --flake "github:KeeTraxx/k-nixos?dir=home-manager-only#kt"
+NIXPKGS_ALLOW_INSECURE=1 NIX_CONFIG="experimental-features = nix-command flakes" nix run "github:nix-community/home-manager/release-26.05" -- switch --impure --flake "github:KeeTraxx/k-nixos?dir=home-manager-only#kt"
 ```
 
 > This uses `nix run` to invoke home-manager directly, so nothing needs to be installed beforehand. See `home-manager-only/README.md` for more options (local checkout, with nixGL, etc.).

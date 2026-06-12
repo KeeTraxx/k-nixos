@@ -11,6 +11,6 @@
     (nixGLWrap godot)
     (nixGLWrap logseq)
     (nixGLWrap drawio)
-    (nixGLWrap zed-editor)
+    (nixGLWrap unstable.zed-editor)
   ];
 }
