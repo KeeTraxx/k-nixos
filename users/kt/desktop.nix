@@ -5,7 +5,7 @@
   ...
 }:
 let
-  nixGLWrap = pkg: if osConfig != null then pkg else config.lib.nixGL.wrap pkg;
+  nixGLWrap = pkg: if osConfig ? system.stateVersion then pkg else config.lib.nixGL.wrap pkg;
 in
 {
   home.packages = with pkgs; [
