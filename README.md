@@ -108,6 +108,16 @@ nix run github:nix-community/nixos-anywhere -- \
   root@<ip>
 ```
 
+## Applying home-manager (standalone, no NixOS)
+
+The `home-manager-only/` directory contains a standalone flake that works on any system with Nix installed.
+
+```bash
+NIX_CONFIG="experimental-features = nix-command flakes" nix run "github:nix-community/home-manager/release-26.05" -- switch --flake "github:KeeTraxx/k-nixos?dir=home-manager-only#kt"
+```
+
+> This uses `nix run` to invoke home-manager directly, so nothing needs to be installed beforehand. See `home-manager-only/README.md` for more options (local checkout, with nixGL, etc.).
+
 ## Adding a user
 
 1. Create `users/<username>/default.nix` and `users/<username>/home.nix`, following `users/kt/` as a template.

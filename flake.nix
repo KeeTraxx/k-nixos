@@ -48,6 +48,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
+              home-manager.extraSpecialArgs = { nixGLWrap = pkg: pkg; };
               # Expose unstable packages as pkgs.unstable everywhere,
               # including home-manager (via useGlobalPkgs).
               nixpkgs.overlays = [
