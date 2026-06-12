@@ -16,7 +16,8 @@
     rustup
     keepassxc
     jetbrains.idea-oss
-
+    nh
+    home-manager
   ];
 
   programs.less.enable = true;

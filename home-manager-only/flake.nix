@@ -41,29 +41,33 @@
           })
         ];
       };
-    in
-    {
-      homeConfigurations."kt" = home-manager.lib.homeManagerConfiguration {
+      nixGLWrap = pkg: pkgs.runCommand "${pkg.name}-nixgl" { } ''
+        mkdir -p $out/bin
+        for bin in ${pkg}/bin/*; do
+          name=$(basename $bin)
+          echo "#!${pkgs.bash}/bin/bash" > $out/bin/$name
+          echo "exec ${pkgs.nixgl.auto.nixGLDefault}/bin/nixGLDefault $bin \"\$@\"" >> $out/bin/$name
+          chmod +x $out/bin/$name
+        done
+      '';
+
+      mkHome = username: home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        extraSpecialArgs = {
-          nixGLWrap = pkg: pkgs.runCommand "${pkg.name}-nixgl" { } ''
-            mkdir -p $out/bin
-            for bin in ${pkg}/bin/*; do
-              name=$(basename $bin)
-              echo "#!${pkgs.bash}/bin/bash" > $out/bin/$name
-              echo "exec ${pkgs.nixgl.auto.nixGLDefault}/bin/nixGLDefault $bin \"\$@\"" >> $out/bin/$name
-              chmod +x $out/bin/$name
-            done
-          '';
-        };
+        extraSpecialArgs = { inherit nixGLWrap; };
         modules = [
           plasma-manager.homeModules.plasma-manager
           ../users/kt/home.nix
           {
-            home.username = "kt";
-            home.homeDirectory = "/home/kt";
+            home.username = username;
+            home.homeDirectory = "/home/${username}";
           }
         ];
+      };
+    in
+    {
+      homeConfigurations = {
+        kt = mkHome "kt";
+        lttrk = mkHome "lttrk";
       };
     };
 }
