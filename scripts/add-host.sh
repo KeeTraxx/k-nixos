@@ -49,7 +49,7 @@ cat > "$HOST_DIR/disk.nix" << EOF
               settings.allowDiscards = true;
               content = {
                 type = "filesystem";
-                format = "ext4";
+                format = "btrfs";
                 mountpoint = "/";
               };
             };
