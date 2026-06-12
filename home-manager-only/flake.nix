@@ -41,29 +41,21 @@
           })
         ];
       };
-      nixGLWrap = pkg: pkgs.runCommand "${pkg.name}-nixgl" { } ''
-        mkdir -p $out/bin
-        for bin in ${pkg}/bin/*; do
-          name=$(basename $bin)
-          echo "#!${pkgs.bash}/bin/bash" > $out/bin/$name
-          echo "exec ${pkgs.nixgl.auto.nixGLDefault}/bin/nixGLDefault $bin \"\$@\"" >> $out/bin/$name
-          chmod +x $out/bin/$name
-        done
-      '';
 
-      mkHome = username: home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = { inherit nixGLWrap; };
-        modules = [
-          plasma-manager.homeModules.plasma-manager
-          ../users/kt/home.nix
-          {
-            home.username = username;
-            home.homeDirectory = "/home/${username}";
-            home.sessionVariables.NH_HOME_FLAKE = "github:KeeTraxx/k-nixos?dir=home-manager-only";
-          }
-        ];
-      };
+      mkHome =
+        username:
+        home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [
+            plasma-manager.homeModules.plasma-manager
+            ../users/kt/home.nix
+            {
+              home.username = username;
+              home.homeDirectory = "/home/${username}";
+              home.sessionVariables.NH_HOME_FLAKE = "github:KeeTraxx/k-nixos?dir=home-manager-only";
+            }
+          ];
+        };
     in
     {
       homeConfigurations = {
