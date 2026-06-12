@@ -6,6 +6,7 @@
     ./rust.nix
     ../../modules/swisstopo/swisstopo.nix
     ./foot.nix
+    ./desktop.nix
   ];
   home.stateVersion = "26.05";
 
