@@ -12,5 +12,12 @@
     (nixGLWrap logseq)
     (nixGLWrap drawio)
     (nixGLWrap unstable.zed-editor)
+    nerd-fonts.fira-code
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.hack
+
   ];
+  home.shellAliases = {
+    zed = "zeditor";
+  };
 }

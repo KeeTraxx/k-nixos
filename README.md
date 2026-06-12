@@ -121,7 +121,7 @@ NIXPKGS_ALLOW_INSECURE=1 NIX_CONFIG="experimental-features = nix-command flakes"
 If you have nix-helper installed, you can use it to run home-manager without the `NIX_CONFIG` environment variable:
 
 ```bash
-nh home switch
+NIXPKGS_ALLOW_INSECURE=1 NIX_CONFIG="experimental-features = nix-command flakes" nh home switch --impure github:KeeTraxx/k-nixos?dir=home-manager-only -c kt
 ```
 
 ## Adding a user

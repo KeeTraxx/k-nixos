@@ -34,9 +34,6 @@
   users.users.root.hashedPasswordFile = lib.mkIf (builtins.pathExists /etc/secrets/users/root) "/etc/secrets/users/root";
 
   environment.systemPackages = with pkgs; [
-    # Multimedia and Utilities
-    aria2 # better wget
-
     # cli tools
     htop
     p7zip
@@ -46,44 +43,9 @@
     ncdu # du with tui
     dog # better dig
     rsync
-    ffmpeg
-    imagemagick
     nmap # ncat for gdscript language server
-    sops # encryption tool for secrets
-    age # key generator for sops
-    claude-code
-    exiftool # exiftool
-    poppler-utils # pdfinfo, pdffonts
     yq # yaml query tool
     jq # json query tool
-    whois # whois lookup tool
-    qrencode # qr code generator
-
-    # Development Tools
-    ripgrep # fast recursive grep. run with rgrep
-    just # command runner
-    jq
-    sqlite
-    gh # github cli
-    pipenv
-    uv # python package manager
-    pylint # python linter
-
-    # Infrastructure and Cloud Tools
-    opentofu
-    terraform
-    terramate
-    kubectl
-    kubectx
-    kubeseal
-    kube-linter
-    k9s
-    tflint
-    argocd
-    summon
-    awscli2
-    kubernetes-helm
-    talosctl
 
     # nix specific
     nixd
