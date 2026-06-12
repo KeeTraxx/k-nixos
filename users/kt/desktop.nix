@@ -1,11 +1,23 @@
 {
   pkgs,
   osConfig ? null,
-  config,
+  nixGLWrapper ? null,
   ...
 }:
 let
-  nixGLWrap = pkg: if osConfig ? system.stateVersion then pkg else config.lib.nixGL.wrap pkg;
+  nixGLWrap =
+    pkg:
+    if osConfig ? system.stateVersion then
+      pkg
+    else
+      pkgs.runCommand "${pkg.name}-nixgl" { nativeBuildInputs = [ pkgs.makeWrapper ]; } ''
+        mkdir -p $out/bin
+        nixgl_bin=$(echo ${nixGLWrapper}/bin/*)
+        for bin in ${pkg}/bin/*; do
+          makeWrapper "$nixgl_bin" $out/bin/$(basename $bin) \
+            --add-flags "$bin"
+        done
+      '';
 in
 {
   home.packages = with pkgs; [

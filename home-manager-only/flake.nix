@@ -46,6 +46,9 @@
         username:
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
+          extraSpecialArgs = {
+            nixGLWrapper = pkgs.nixgl.auto.nixGLNvidia;
+          };
           modules = [
             plasma-manager.homeModules.plasma-manager
             ../users/kt/home.nix

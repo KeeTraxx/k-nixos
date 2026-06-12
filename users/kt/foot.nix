@@ -1,15 +1,28 @@
 {
   pkgs,
-  config,
   osConfig ? null,
+  nixGLWrapper ? null,
   ...
 }:
+let
+  nixGLWrap =
+    pkg:
+    if osConfig ? system.stateVersion then
+      pkg
+    else
+      pkgs.runCommand "${pkg.name}-nixgl" { nativeBuildInputs = [ pkgs.makeWrapper ]; } ''
+        mkdir -p $out/bin
+        nixgl_bin=$(echo ${nixGLWrapper}/bin/*)
+        for bin in ${pkg}/bin/*; do
+          makeWrapper "$nixgl_bin" $out/bin/$(basename $bin) \
+            --add-flags "$bin"
+        done
+      '';
+in
 {
   programs.foot = {
     enable = true;
-    # On NixOS, OpenGL is managed by the OS — use foot directly.
-    # In standalone home-manager (non-NixOS), nixGLWrap is required for OpenGL.
-    package = if osConfig ? system.stateVersion then pkgs.foot else config.lib.nixGL.wrap pkgs.foot;
+    package = nixGLWrap pkgs.foot;
     settings = {
       main = {
         term = "kitty";
