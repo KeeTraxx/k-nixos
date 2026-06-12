@@ -5,6 +5,7 @@
     ../../modules/common.nix
     ../../modules/kde.nix
     ../../modules/fonts.nix
+    ../../modules/flatpak.nix
     ../../users/kt/default.nix
   ];
 

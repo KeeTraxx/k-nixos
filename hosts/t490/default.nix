@@ -7,6 +7,7 @@
     ../../users/ft/default.nix
     ../../modules/kde.nix
     ../../modules/fonts.nix
+    ../../modules/flatpak.nix
   ];
 
   nixpkgs.hostPlatform.system = "x86_64-linux";
