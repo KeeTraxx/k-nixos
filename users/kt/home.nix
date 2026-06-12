@@ -5,7 +5,6 @@
     ./fish.nix
     ./rust.nix
     ../../modules/swisstopo/swisstopo.nix
-    ../../modules/fonts.nix
     ./foot.nix
     ./desktop.nix
     ./cli-tools.nix
