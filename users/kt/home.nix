@@ -11,16 +11,6 @@
   ];
   home.stateVersion = "26.05";
 
-  home.packages = with pkgs; [
-    unstable.claude-code # pinned to nixos-unstable (see flake.nix overlay)
-    talosctl
-    rustup
-    keepassxc
-    jetbrains.idea-oss
-    nh
-    home-manager
-  ];
-
   programs.less.enable = true;
   programs.htop.enable = true;
 

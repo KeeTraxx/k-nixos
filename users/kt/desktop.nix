@@ -15,7 +15,8 @@
     nerd-fonts.fira-code
     nerd-fonts.jetbrains-mono
     nerd-fonts.hack
-
+    (nixGLWrap keepassxc)
+    (nixGLWrap jetbrains.idea-oss)
   ];
   home.shellAliases = {
     zed = "zeditor";

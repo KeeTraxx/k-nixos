@@ -20,7 +20,7 @@
     nmap # ncat for gdscript language server
     sops # encryption tool for secrets
     age # key generator for sops
-    claude-code
+    unstable.claude-code
     exiftool # exiftool
     poppler-utils # pdfinfo, pdffonts
     yq # yaml query tool
