@@ -118,6 +118,12 @@ NIXPKGS_ALLOW_INSECURE=1 NIX_CONFIG="experimental-features = nix-command flakes"
 
 > This uses `nix run` to invoke home-manager directly, so nothing needs to be installed beforehand. See `home-manager-only/README.md` for more options (local checkout, with nixGL, etc.).
 
+If you have nix-helper installed, you can use it to run home-manager without the `NIX_CONFIG` environment variable:
+
+```bash
+nh home switch
+```
+
 ## Adding a user
 
 1. Create `users/<username>/default.nix` and `users/<username>/home.nix`, following `users/kt/` as a template.

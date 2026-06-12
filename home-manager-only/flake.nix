@@ -60,6 +60,7 @@
           {
             home.username = username;
             home.homeDirectory = "/home/${username}";
+            home.sessionVariables.NH_HOME_FLAKE = "github:KeeTraxx/k-nixos?dir=home-manager-only#${username}";
           }
         ];
       };
