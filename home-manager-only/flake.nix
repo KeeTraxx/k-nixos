@@ -48,6 +48,7 @@
           inherit pkgs;
           modules = [
             plasma-manager.homeModules.plasma-manager
+            nixgl.homeModules.nixgl
             ../users/kt/home.nix
             {
               home.username = username;
