@@ -3,6 +3,17 @@
 {
   programs.plasma = {
     enable = true;
+    workspace = {
+      theme = "breeze-dark";
+      colorScheme = "BreezeDark";
+      cursor = {
+        theme = "breeze_cursors";
+        size = 24;
+      };
+      iconTheme = "breeze-dark";
+      # wallpaper = "~/Pictures/wallpaper.jpg"; # replace with your wallpaper path
+    };
+
     shortcuts = {
       kwin."Window Close" = [
         "Alt+F4"

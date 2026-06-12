@@ -1,17 +1,7 @@
 { pkgs, config, ... }:
 {
   home.packages = with pkgs; [
-    (config.nixGLWrap mesa-demos) # glxgears
-    (config.nixGLWrap vulkan-tools) # vkcube vkgears
-    (config.nixGLWrap godot)
-    (config.nixGLWrap logseq)
-    (config.nixGLWrap drawio)
     (config.nixGLWrap unstable.zed-editor)
-    nerd-fonts.fira-code
-    nerd-fonts.jetbrains-mono
-    nerd-fonts.hack
-    (config.nixGLWrap keepassxc)
-    (config.nixGLWrap jetbrains.idea-oss)
   ];
   home.shellAliases = {
     zed = "zeditor";

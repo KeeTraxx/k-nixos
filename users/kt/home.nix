@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   imports = [
+    ../../modules/nixgl-wrap.nix
     ./plasma-manager-config.nix
     ./git.nix
     ./fish.nix
@@ -8,26 +9,12 @@
     ./foot.nix
     ./desktop.nix
     ./cli-tools.nix
+    ./zed.nix
   ];
   home.stateVersion = "26.05";
 
   programs.less.enable = true;
   programs.htop.enable = true;
-
   programs.fish.enable = true;
 
-  programs.plasma = {
-    enable = true;
-
-    workspace = {
-      theme = "breeze-dark";
-      colorScheme = "BreezeDark";
-      cursor = {
-        theme = "breeze_cursors";
-        size = 24;
-      };
-      iconTheme = "breeze-dark";
-      # wallpaper = "~/Pictures/wallpaper.jpg"; # replace with your wallpaper path
-    };
-  };
 }
