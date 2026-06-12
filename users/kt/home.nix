@@ -11,6 +11,8 @@
     ./cli-tools.nix
     ./zed.nix
   ];
+  fonts.fontconfig.enable = true;
+
   home.stateVersion = "26.05";
 
   programs.less.enable = true;
