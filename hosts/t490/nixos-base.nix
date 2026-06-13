@@ -2,12 +2,13 @@
   imports = [
     ./disk.nix
     ./hardware-configuration.nix
-    ../../modules/common.nix
-    ../../users/kt/default.nix
-    ../../users/ft/default.nix
-    ../../modules/kde.nix
-    ../../modules/fonts.nix
-    ../../modules/flatpak.nix
+    ../../modules/required/common.nix
+    ../../modules/required/fonts.nix
+    ../../modules/required/k-nixos-update.nix
+    ../../modules/optional/flatpak.nix
+    ../../modules/optional/kde.nix
+    ../../users/ft/main-nixos.nix
+    ../../users/kt/main-nixos.nix
   ];
 
   nixpkgs.hostPlatform.system = "x86_64-linux";
