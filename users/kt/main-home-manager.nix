@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   imports = [
-    ../../modules/manual-only/nixgl-wrap.nix
+    ../../home-manager-only/nixgl-wrap.nix
     ./plasma-manager-config.nix
     ./git.nix
     ./fish.nix
