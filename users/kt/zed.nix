@@ -2,6 +2,7 @@
 {
   home.packages = with pkgs; [
     (config.nixGLWrap unstable.zed-editor)
+    unstable.claude-code-acp
   ];
   home.shellAliases = {
     zed = "zeditor";
