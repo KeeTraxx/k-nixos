@@ -48,6 +48,7 @@
     jq # json query tool
     python3
     gnupg
+    stdenv # nix standard build environment (make, gcc, etc.)
 
     # nix specific
     nixd
