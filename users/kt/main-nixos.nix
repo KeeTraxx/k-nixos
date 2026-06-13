@@ -15,5 +15,5 @@
   };
   programs.fish.enable = true;
 
-  home-manager.users.kt = import ./main.nix;
+  home-manager.users.kt = import ./main-home-manager.nix;
 }
