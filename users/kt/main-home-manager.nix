@@ -1,11 +1,11 @@
 { pkgs, ... }: {
   imports = [
-    ../../modules/nixgl-wrap.nix
+    ../../modules/manual-only/nixgl-wrap.nix
     ./plasma-manager-config.nix
     ./git.nix
     ./fish.nix
     ./rust.nix
-    ../../modules/swisstopo/swisstopo.nix
+    ../../modules/manual-only/swisstopo/swisstopo.nix
     ./foot.nix
     ./desktop.nix
     ./cli-tools.nix

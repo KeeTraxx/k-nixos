@@ -20,68 +20,8 @@ fi
 
 mkdir -p "$HOST_DIR"
 
-cat > "$HOST_DIR/disk.nix" << EOF
-{ ... }: {
-  disko.devices = {
-    disk.main = {
-      type = "disk";
-      device = "$DISK";
-      content = {
-        type = "gpt";
-        partitions = {
-          ESP = {
-            size = "512M";
-            type = "EF00";
-            content = {
-              type = "filesystem";
-              format = "vfat";
-              mountpoint = "/boot";
-              mountOptions = [ "umask=0077" ];
-            };
-          };
-          luks = {
-            size = "100%";
-            content = {
-              type = "luks";
-              name = "cryptroot";
-              # install.sh uploads the passphrase here via --disk-encryption-keys
-              passwordFile = "/tmp/luks.key";
-              settings.allowDiscards = true;
-              content = {
-                type = "filesystem";
-                format = "btrfs";
-                mountpoint = "/";
-              };
-            };
-          };
-        };
-      };
-    };
-  };
-}
-EOF
-
-cat > "$HOST_DIR/default.nix" << EOF
-{ pkgs, ... }: {
-  imports = [
-    ./disk.nix
-    ./hardware-configuration.nix
-    ../../modules/common.nix
-    ../../users/kt/default.nix
-  ];
-
-  nixpkgs.hostPlatform.system = "x86_64-linux";
-
-  networking.hostName = "$HOSTNAME";
-
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  networking.networkmanager.enable = true;
-
-  system.stateVersion = "26.05";
-}
-EOF
+sed "s|@DISK@|$DISK|g" "$REPO_ROOT/hosts/disk.nix.skel" > "$HOST_DIR/disk.nix"
+sed "s|@HOSTNAME@|$HOSTNAME|g" "$REPO_ROOT/hosts/nixos-base.nix.skel" > "$HOST_DIR/default.nix"
 
 # Stub so the flake evaluates before install generates the real one.
 # install.sh replaces this via --generate-hardware-config.

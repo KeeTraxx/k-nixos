@@ -1,0 +1,20 @@
+{ pkgs, ... }: {
+  imports = [
+    ./disk.nix
+    ./hardware-configuration.nix
+    @REQUIRED_IMPORTS@
+    @OPTIONAL_IMPORTS@
+    @USER_IMPORTS@
+  ];
+
+  nixpkgs.hostPlatform.system = "x86_64-linux";
+
+  networking.hostName = "@HOSTNAME@";
+
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  networking.networkmanager.enable = true;
+
+  system.stateVersion = "26.05";
+}

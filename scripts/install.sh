@@ -105,20 +105,77 @@ fi
 echo "Users for this machine: ${SELECTED_USERS[*]}"
 echo ""
 
+# ── Optional module selection ─────────────────────────────────────────────────
+ALL_MODULES=()
+for MODULE_FILE in "$REPO_ROOT/modules/optional"/*.nix; do
+  [[ -f "$MODULE_FILE" ]] || continue
+  ALL_MODULES+=("$(basename "$MODULE_FILE" .nix)")
+done
+
+echo "--- Optional modules ---"
+echo "Which optional modules should be enabled on this machine?"
+for i in "${!ALL_MODULES[@]}"; do
+  echo "  [$((i+1))] ${ALL_MODULES[$i]}"
+done
+echo ""
+read -r -p "Enter names or numbers (space-separated, Enter to skip): " MODULE_INPUT
+echo ""
+
+SELECTED_MODULES=()
+for token in $MODULE_INPUT; do
+  if [[ "$token" =~ ^[0-9]+$ ]]; then
+    idx=$((token - 1))
+    if (( idx >= 0 && idx < ${#ALL_MODULES[@]} )); then
+      SELECTED_MODULES+=("${ALL_MODULES[$idx]}")
+    else
+      echo "Warning: no module at index $token, skipping" >&2
+    fi
+  elif [[ -f "$REPO_ROOT/modules/optional/$token.nix" ]]; then
+    SELECTED_MODULES+=("$token")
+  else
+    echo "Warning: module '$token' not found, skipping" >&2
+  fi
+done
+
+if [[ ${#SELECTED_MODULES[@]} -gt 0 ]]; then
+  echo "Optional modules: ${SELECTED_MODULES[*]}"
+else
+  echo "No optional modules selected."
+fi
+echo ""
+
 # ── Scaffold host config if needed ────────────────────────────────────────────
 if [[ ! -d "$REPO_ROOT/hosts/$HOSTNAME" ]]; then
   echo "No config found for '$HOSTNAME' — scaffolding from template..."
   echo ""
   "$SCRIPT_DIR/add-host.sh" "$HOSTNAME" "$DISK"
 
-  # Replace the default user import with the selected users
+  # Substitute all placeholders in the generated default.nix
   DEFAULT_NIX="$REPO_ROOT/hosts/$HOSTNAME/default.nix"
+
+  REQUIRED_IMPORT_LINES=""
+  for MODULE_FILE in "$REPO_ROOT/modules/required"/*.nix; do
+    [[ -f "$MODULE_FILE" ]] || continue
+    REQUIRED_IMPORT_LINES+="    ../../modules/required/$(basename "$MODULE_FILE")\n"
+  done
+
+  OPTIONAL_IMPORT_LINES=""
+  for MODULE in "${SELECTED_MODULES[@]}"; do
+    OPTIONAL_IMPORT_LINES+="    ../../modules/optional/$MODULE.nix\n"
+  done
+
   USER_IMPORT_LINES=""
   for USER in "${SELECTED_USERS[@]}"; do
-    USER_IMPORT_LINES+="    ../../users/$USER/default.nix\n"
+    USER_IMPORT_LINES+="    ../../users/$USER/main-nixos.nix\n"
   done
-  awk -v imports="$USER_IMPORT_LINES" \
-    '/    \.\.\/\.\.\/users\/[^/]+\/default\.nix/ { if (!done) { printf "%s", imports; done=1 }; next } { print }' \
+
+  awk -v req="$REQUIRED_IMPORT_LINES" \
+      -v opt="$OPTIONAL_IMPORT_LINES" \
+      -v usr="$USER_IMPORT_LINES" \
+    '/    @REQUIRED_IMPORTS@/ { printf "%s", req; next }
+     /    @OPTIONAL_IMPORTS@/ { if (opt != "") printf "%s", opt; next }
+     /    @USER_IMPORTS@/     { printf "%s", usr; next }
+     { print }' \
     "$DEFAULT_NIX" > "$DEFAULT_NIX.tmp" && mv "$DEFAULT_NIX.tmp" "$DEFAULT_NIX"
 
   echo ""

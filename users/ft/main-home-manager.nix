@@ -6,8 +6,6 @@
     ./fish.nix
     ./foot.nix
     ./desktop.nix
-    ./cli-tools.nix
-    ./zed.nix
   ];
   fonts.fontconfig.enable = true;
 

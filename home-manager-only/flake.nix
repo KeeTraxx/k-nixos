@@ -51,7 +51,7 @@
           };
           modules = [
             plasma-manager.homeModules.plasma-manager
-            ../users/kt/main.nix
+            ../users/${username}/main-home-manager.nix
             {
               home.username = username;
               home.homeDirectory = "/home/${username}";
