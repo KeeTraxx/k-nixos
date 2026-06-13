@@ -1,4 +1,4 @@
-{ ... }: {
+{ pkgs, ... }: {
   services.desktopManager.plasma6.enable = true;
 
   services.displayManager.sddm = {
@@ -19,4 +19,10 @@
     enable = true;
     powerOnBoot = true;
   };
+
+  environment.systemPackages = with pkgs; [
+    libreoffice-qt6-fresh
+    obs-studio
+  ];
+
 }

@@ -46,6 +46,8 @@
     nmap # ncat for gdscript language server
     yq # yaml query tool
     jq # json query tool
+    python
+    gnupg
 
     # nix specific
     nixd

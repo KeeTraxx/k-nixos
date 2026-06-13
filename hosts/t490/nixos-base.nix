@@ -7,6 +7,7 @@
     ../../modules/required/k-nixos-update.nix
     ../../modules/optional/flatpak.nix
     ../../modules/optional/kde.nix
+    ../../modules/optional/desktop-apps.nix
     ../../users/ft/main-nixos.nix
     ../../users/kt/main-nixos.nix
   ];
