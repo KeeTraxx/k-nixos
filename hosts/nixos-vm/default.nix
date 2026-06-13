@@ -3,9 +3,7 @@
     ./disk.nix
     ./hardware-configuration.nix
     ../../modules/common.nix
-    ../../modules/kde.nix
-    ../../modules/fonts.nix
-    ../../modules/flatpak.nix
+    ../../users/ft/default.nix
     ../../users/kt/default.nix
   ];
 

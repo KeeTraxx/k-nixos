@@ -65,11 +65,62 @@ if [[ -z "$DISK" ]]; then
   echo ""
 fi
 
+# ── User selection ────────────────────────────────────────────────────────────
+ALL_USERS=()
+for USER_DIR in "$REPO_ROOT/users"/*/; do
+  [[ -d "$USER_DIR" ]] || continue
+  ALL_USERS+=("$(basename "$USER_DIR")")
+done
+
+echo "--- User selection ---"
+echo "Which users should be initialized on this machine?"
+for i in "${!ALL_USERS[@]}"; do
+  echo "  [$((i+1))] ${ALL_USERS[$i]}"
+done
+echo ""
+read -r -p "Enter names or numbers (space-separated): " USER_INPUT
+echo ""
+
+SELECTED_USERS=()
+for token in $USER_INPUT; do
+  if [[ "$token" =~ ^[0-9]+$ ]]; then
+    idx=$((token - 1))
+    if (( idx >= 0 && idx < ${#ALL_USERS[@]} )); then
+      SELECTED_USERS+=("${ALL_USERS[$idx]}")
+    else
+      echo "Warning: no user at index $token, skipping" >&2
+    fi
+  elif [[ -d "$REPO_ROOT/users/$token" ]]; then
+    SELECTED_USERS+=("$token")
+  else
+    echo "Warning: user '$token' not found, skipping" >&2
+  fi
+done
+
+if [[ ${#SELECTED_USERS[@]} -eq 0 ]]; then
+  echo "Error: no valid users selected." >&2
+  exit 1
+fi
+
+echo "Users for this machine: ${SELECTED_USERS[*]}"
+echo ""
+
 # ── Scaffold host config if needed ────────────────────────────────────────────
 if [[ ! -d "$REPO_ROOT/hosts/$HOSTNAME" ]]; then
   echo "No config found for '$HOSTNAME' — scaffolding from template..."
   echo ""
   "$SCRIPT_DIR/add-host.sh" "$HOSTNAME" "$DISK"
+
+  # Replace the default user import with the selected users
+  DEFAULT_NIX="$REPO_ROOT/hosts/$HOSTNAME/default.nix"
+  USER_IMPORT_LINES=""
+  for USER in "${SELECTED_USERS[@]}"; do
+    USER_IMPORT_LINES+="    ../../users/$USER/default.nix\n"
+  done
+  awk -v imports="$USER_IMPORT_LINES" \
+    '/    \.\.\/\.\.\/users\/[^/]+\/default\.nix/ { if (!done) { printf "%s", imports; done=1 }; next } { print }' \
+    "$DEFAULT_NIX" > "$DEFAULT_NIX.tmp" && mv "$DEFAULT_NIX.tmp" "$DEFAULT_NIX"
+
   echo ""
   echo "You can edit hosts/$HOSTNAME/default.nix before continuing."
   read -r -p "Press Enter to continue with install, or Ctrl-C to abort and edit first: "
@@ -131,9 +182,8 @@ ROOT_PASS=$(read_password "root password")
 hash_password "$ROOT_PASS" > "$EXTRA_FILES/etc/secrets/users/root"
 echo ""
 
-# One entry per directory under users/
-for USER_DIR in "$REPO_ROOT/users"/*/; do
-  USER=$(basename "$USER_DIR")
+# One entry per selected user
+for USER in "${SELECTED_USERS[@]}"; do
   USER_PASS=$(read_password "password for $USER")
   hash_password "$USER_PASS" > "$EXTRA_FILES/etc/secrets/users/$USER"
   echo ""
