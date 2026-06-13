@@ -26,7 +26,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(dirname "$SCRIPT_DIR")"
 
 # ── Preflight ─────────────────────────────────────────────────────────────────
-[[ -f "$REPO_ROOT/hosts/$HOSTNAME/default.nix" ]] || {
+[[ -f "$REPO_ROOT/hosts/$HOSTNAME/nixos-base.nix" ]] || {
   echo "Error: host '$HOSTNAME' not found in $REPO_ROOT/hosts/" >&2
   exit 1
 }

@@ -150,8 +150,8 @@ if [[ ! -d "$REPO_ROOT/hosts/$HOSTNAME" ]]; then
   echo ""
   "$SCRIPT_DIR/add-host.sh" "$HOSTNAME" "$DISK"
 
-  # Substitute all placeholders in the generated default.nix
-  DEFAULT_NIX="$REPO_ROOT/hosts/$HOSTNAME/default.nix"
+  # Substitute all placeholders in the generated nixos-base.nix
+  DEFAULT_NIX="$REPO_ROOT/hosts/$HOSTNAME/nixos-base.nix"
 
   REQUIRED_IMPORT_LINES=""
   for MODULE_FILE in "$REPO_ROOT/modules/required"/*.nix; do
@@ -179,7 +179,7 @@ if [[ ! -d "$REPO_ROOT/hosts/$HOSTNAME" ]]; then
     "$DEFAULT_NIX" > "$DEFAULT_NIX.tmp" && mv "$DEFAULT_NIX.tmp" "$DEFAULT_NIX"
 
   echo ""
-  echo "You can edit hosts/$HOSTNAME/default.nix before continuing."
+  echo "You can edit hosts/$HOSTNAME/nixos-base.nix before continuing."
   read -r -p "Press Enter to continue with install, or Ctrl-C to abort and edit first: "
   echo ""
 fi

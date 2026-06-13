@@ -41,8 +41,7 @@
         lib.nixosSystem {
           modules = [
             disko.nixosModules.disko
-            ./hosts/${hostname}/default.nix
-            ./modules/k-nixos-update.nix
+            ./hosts/${hostname}/nixos-base.nix
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;

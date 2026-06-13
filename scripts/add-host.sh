@@ -21,7 +21,7 @@ fi
 mkdir -p "$HOST_DIR"
 
 sed "s|@DISK@|$DISK|g" "$REPO_ROOT/hosts/disk.nix.skel" > "$HOST_DIR/disk.nix"
-sed "s|@HOSTNAME@|$HOSTNAME|g" "$REPO_ROOT/hosts/nixos-base.nix.skel" > "$HOST_DIR/default.nix"
+sed "s|@HOSTNAME@|$HOSTNAME|g" "$REPO_ROOT/hosts/nixos-base.nix.skel" > "$HOST_DIR/nixos-base.nix"
 
 # Stub so the flake evaluates before install generates the real one.
 # install.sh replaces this via --generate-hardware-config.
@@ -34,7 +34,7 @@ EOF
 echo "Host '$HOSTNAME' scaffolded at $HOST_DIR"
 echo ""
 echo "Next steps:"
-echo "  1. Review/edit $HOST_DIR/default.nix (users, desktop, etc.)"
+echo "  1. Review/edit $HOST_DIR/nixos-base.nix (users, desktop, etc.)"
 echo "  2. Commit and push:"
 echo "       git add hosts/$HOSTNAME"
 echo "       git commit -m 'Add host $HOSTNAME'"
