@@ -48,8 +48,14 @@
     jq # json query tool
     python3
     gnupg
-    stdenv # nix standard build environment (make, etc.)
-    buildEnv # make, gcc (aka build-essential)
+    gcc
+    gnumake
+    binutils
+    pkg-config
+    autoconf
+    automake
+    libtool
+    nix-ld # allows running unpatched binaries
 
     # nix specific
     nixd
