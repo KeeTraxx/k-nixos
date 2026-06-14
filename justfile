@@ -6,7 +6,7 @@ nix-validate:
 nixos-update-local:
     #!/usr/bin/env bash
     if command -v nixos-version &>/dev/null; then
-        nh os switch .# -c "$(hostname)"
+        nh os switch .#$(hostname)
     else
         nh home switch ./home-manager-only -c $(whoami) --impure
     fi
