@@ -5,6 +5,7 @@
     ../../modules/required/common.nix
     ../../modules/required/fonts.nix
     ../../modules/required/k-nixos-update.nix
+    ../../modules/required/docker.nix
     ../../modules/optional/flatpak.nix
     ../../modules/optional/kde.nix
     ../../users/ft/main-nixos.nix
