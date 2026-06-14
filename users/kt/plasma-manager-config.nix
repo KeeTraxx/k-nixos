@@ -28,6 +28,7 @@
         vendorId = "0002";
         productId = "0007";
         naturalScroll = true;
+        tapToClick = true;
       }
     ];
 

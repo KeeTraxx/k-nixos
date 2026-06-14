@@ -22,6 +22,17 @@
       "services/foot.desktop"._launch = "Meta+Return";
       "services/org.kde.spectacle.desktop".RectangularRegionScreenShot = "Meta+Shift+S";
     };
+
+    input.touchpads = [
+      {
+        name = "SynPS/2 Synaptics TouchPad";
+        vendorId = "0002";
+        productId = "0007";
+        naturalScroll = true;
+        tapToClick = true;
+      }
+    ];
+
     configFile = {
       dolphinrc.DetailsMode.ExpandableFolders = false;
       kdeglobals.General.TerminalApplication = "foot";
@@ -44,7 +55,8 @@
       kxkbrc.Layout.ResetOldOptions = true;
       kxkbrc.Layout.Use = true;
       kxkbrc.Layout.VariantList = "";
-      plasma-localerc.Formats.LANG = "en_US.UTF-8";
+      plasma-localerc.Translations.LANGUAGE = "de_CH";
+      plasma-localerc.Formats.LANG = "de_CH.UTF-8";
       plasma-localerc.Formats.LC_ADDRESS = "de_CH.UTF-8";
       plasma-localerc.Formats.LC_MEASUREMENT = "de_CH.UTF-8";
       plasma-localerc.Formats.LC_MONETARY = "de_CH.UTF-8";
