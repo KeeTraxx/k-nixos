@@ -35,11 +35,13 @@
     serviceConfig = {
       ExecStart = "${pkgs.unstable.dms-shell}/bin/dms run --session";
       Restart = "on-failure";
+      Environment = "PATH=${pkgs.unstable.quickshell}/bin:${pkgs.unstable.dms-shell}/bin:/run/current-system/sw/bin:/run/current-system/sw/sbin";
     };
   };
 
   environment.systemPackages = with pkgs; [
     unstable.dms-shell
+    unstable.quickshell
     foot # terminal
     swaylock # screen lock
     swayidle # idle management
