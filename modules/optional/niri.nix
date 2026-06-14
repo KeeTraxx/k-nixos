@@ -6,6 +6,8 @@
     wayland.enable = true;
   };
 
+  security.pam.services.sddm.kwallet.enable = true;
+
   xdg.portal.enable = true;
 
   services.pipewire = {

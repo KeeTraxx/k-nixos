@@ -47,6 +47,8 @@ screenshot-path "~/Pictures/Screenshots/%Y-%m-%d %H-%M-%S.png"
 
 animations { }
 
+spawn-at-startup "kwalletd6"
+
 binds {
     // Terminal
     Mod+Return { spawn "foot"; }
