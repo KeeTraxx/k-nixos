@@ -10,7 +10,7 @@
         ];
       };
       settings = {
-        node_compile = false;
+        all_compile = false;
       };
     };
   };
