@@ -10,6 +10,7 @@
     ./desktop.nix
     ./cli-tools.nix
     ./zed.nix
+    ./mise.nix
   ];
   fonts.fontconfig.enable = true;
 

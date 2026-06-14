@@ -72,6 +72,9 @@
           "lts"
         ];
       };
+      settings = {
+        node_compile = false;
+      };
     };
   };
 }

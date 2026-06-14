@@ -55,7 +55,6 @@
     autoconf
     automake
     libtool
-    nix-ld # allows running unpatched binaries
 
     # nix specific
     nixd
@@ -64,8 +63,19 @@
     nh
   ];
 
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      stdenv.cc.cc.lib
+      zlib
+      openssl
+      curl
+      glibc
+    ];
+  };
+
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [
-    "electron-39.8.10" # required by jetbrains.idea-oss; remove once nixpkgs updates it
+    "electron-39.8.10" # required by logseq
   ];
 }
