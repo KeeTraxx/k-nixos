@@ -5,6 +5,6 @@ let
 in {
   home.file = lib.listToAttrs (map (file: {
     name = ".config/" + lib.removePrefix (toString configDir + "/") (toString file);
-    value = { source = file; };
+    value = { source = file; force = true; };
   }) files);
 }
