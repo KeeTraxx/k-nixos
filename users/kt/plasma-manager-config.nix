@@ -22,6 +22,15 @@
       "services/foot.desktop"._launch = "Meta+Return";
       "services/org.kde.spectacle.desktop".RectangularRegionScreenShot = "Meta+Shift+S";
     };
+    input.touchpads = [
+      {
+        name = "SynPS/2 Synaptics TouchPad";
+        vendorId = "0002";
+        productId = "0007";
+        naturalScroll = true;
+      }
+    ];
+
     configFile = {
       dolphinrc.DetailsMode.ExpandableFolders = false;
       kdeglobals.General.TerminalApplication = "foot";
