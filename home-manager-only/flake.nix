@@ -53,6 +53,10 @@
             plasma-manager.homeModules.plasma-manager
             ../users/${username}/main-home-manager.nix
             {
+              nixpkgs.config.permittedInsecurePackages = [
+                "electron-39.8.10" # required by logseq
+              ];
+              nixpkgs.config.allowUnfree = true;
               home.username = username;
               home.homeDirectory = "/home/${username}";
               home.sessionVariables.NH_HOME_FLAKE = "github:KeeTraxx/k-nixos?dir=home-manager-only";
