@@ -15,6 +15,7 @@
   ];
   home.shellAliases = {
     zed = "zeditor";
+    m = "__EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json wl-mirror --fullscreen eDP-1";
   };
 
   xdg.desktopEntries."dev.zed.Zed" = {
