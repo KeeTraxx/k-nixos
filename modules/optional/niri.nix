@@ -30,9 +30,9 @@
 
   systemd.user.services.dms = {
     description = "Dank Material Shell";
-    partOf = [ "graphical-session.target" ];
-    after = [ "graphical-session.target" ];
-    wantedBy = [ "graphical-session.target" ];
+    partOf = [ "niri.service" ];
+    after = [ "niri.service" ];
+    wantedBy = [ "niri.service" ];
     restartIfChanged = false;
     serviceConfig = {
       ExecStart = "${pkgs.unstable.dms-shell}/bin/dms run --session";
