@@ -10,3 +10,7 @@ nixos-update-local:
     else
         nh home switch ./home-manager-only -c $(whoami) --impure
     fi
+
+nix-flake-update:
+    nix flake update
+    nix flake update --flake home-manager-only
