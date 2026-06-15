@@ -17,5 +17,10 @@
           makeWrapper "$nixgl_bin" $out/bin/$(basename $bin) \
             --add-flags "$bin"
         done
+        for dir in share lib etc; do
+          if [ -d "${pkg}/$dir" ]; then
+            ln -s "${pkg}/$dir" "$out/$dir"
+          fi
+        done
       '';
 }

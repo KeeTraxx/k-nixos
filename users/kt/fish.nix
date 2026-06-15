@@ -9,6 +9,9 @@
 
   programs.fish = {
     enable = true;
+    shellAliases = {
+      ls = "eza";
+    };
     plugins = [
       {
         name = "tide";

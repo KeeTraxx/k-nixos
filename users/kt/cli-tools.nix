@@ -27,6 +27,8 @@
     jq # json query tool
     whois # whois lookup tool
     qrencode # qr code generator
+    eza # better ls
+    zellij # terminal multiplexer
 
     # Development Tools
     ripgrep # fast recursive grep. run with rgrep
