@@ -1,0 +1,30 @@
+name: Update flake.lock
+
+on:
+  workflow_dispatch:
+  schedule:
+    # every Monday at 06:00 UTC
+    - cron: "0 6 * * 1"
+
+jobs:
+  update-flake-lock:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        flake-dir:
+          - "."
+          - "home-manager-only"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Update flake.lock
+        uses: DeterminateSystems/update-flake-lock@main
+        with:
+          path-to-flake-dir: ${{ matrix.flake-dir }}
+          pr-title: "Update flake.lock (${{ matrix.flake-dir }})"
+          branch: "update-flake-lock-${{ matrix.flake-dir }}"
+          pr-labels: |
+            dependencies
+            automated
