@@ -14,3 +14,6 @@ nixos-update-local:
 nix-flake-update:
     nix flake update
     nix flake update --flake ./home-manager-only
+
+nix-janitor:
+    nh clean all --keep 2
