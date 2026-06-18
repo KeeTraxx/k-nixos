@@ -265,6 +265,11 @@ recent-windows {
     }
 }
 
+binds {
+    // Terminal
+    Mod+Return { spawn "foot"; }
+}
+
 // Include dms files
 include "dms/colors.kdl"
 include "dms/layout.kdl"
