@@ -21,6 +21,7 @@
     sops # encryption tool for secrets
     age # key generator for sops
     unstable.claude-code
+    unstable.opencode
     exiftool # exiftool
     poppler-utils # pdfinfo, pdffonts
     yq # yaml query tool
