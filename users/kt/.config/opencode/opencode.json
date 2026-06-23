@@ -1,0 +1,24 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": ["opencode-with-claude"],
+  "provider": {
+    "anthropic": {
+      "options": {
+        "baseURL": "http://127.0.0.1:3456",
+        "apiKey": "use-cmdline-claude-login"
+      }
+    },
+    "dmr": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Docker Model Runner",
+      "options": {
+        "baseURL": "http://localhost:12434/v1"
+      },
+      "models": {
+        "qwen3": {
+          "name": "ai/qwen3"
+        }
+      }
+    }
+  }
+}
