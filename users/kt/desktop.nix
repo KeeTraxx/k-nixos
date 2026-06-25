@@ -12,6 +12,7 @@
     nerd-fonts.hack
     (config.nixGLWrap keepassxc)
     (config.nixGLWrap jetbrains.idea-oss)
+    (config.nixGLWrap teams-for-linux)
   ];
   home.shellAliases = {
     zed = "zeditor";
