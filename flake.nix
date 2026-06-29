@@ -17,12 +17,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+    nixpkgs-logseq-pr = {
+      url = "github:NixOS/nixpkgs/pull/536292/head";
+      flake = false;
+    };
   };
 
   outputs =
     {
       nixpkgs,
       nixpkgs-unstable,
+      nixpkgs-logseq-pr,
       home-manager,
       disko,
       plasma-manager,
@@ -55,6 +60,13 @@
                     system = final.stdenv.hostPlatform.system;
                     config.allowUnfree = true;
                   };
+                  logseq = (import nixpkgs-logseq-pr {
+                    system = final.stdenv.hostPlatform.system;
+                    config.allowUnfree = true;
+                    config.permittedInsecurePackages = [
+                      "electron-39.8.10"
+                    ];
+                  }).logseq;
                 })
               ];
             }

@@ -77,6 +77,23 @@
         "type": "github"
       }
     },
+    "nixpkgs-logseq-pr": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1782671627,
+        "narHash": "sha256-i41zf4k3Ypz73jePFBtHqXjSn4eLvG94dPHYXgyOURo=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "6308382b893ab84c7736904420b19c00802698cc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "pull/536292/head",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1782467914,
@@ -121,6 +138,7 @@
         "home-manager": "home-manager",
         "nixgl": "nixgl",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-logseq-pr": "nixpkgs-logseq-pr",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "plasma-manager": "plasma-manager"
       }

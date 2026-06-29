@@ -15,12 +15,17 @@
     };
     nixgl.url = "github:KeeTraxx/nixgl/fix-nvidia-kernel-param";
     nixgl.inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs-logseq-pr = {
+      url = "github:NixOS/nixpkgs/pull/536292/head";
+      flake = false;
+    };
   };
 
   outputs =
     {
       nixpkgs,
       nixpkgs-unstable,
+      nixpkgs-logseq-pr,
       home-manager,
       plasma-manager,
       nixgl,
@@ -31,6 +36,9 @@
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
+        config.permittedInsecurePackages = [
+          "electron-39.8.10"
+        ];
         overlays = [
           nixgl.overlays.default
           (final: _: {
@@ -38,6 +46,13 @@
               system = final.stdenv.hostPlatform.system;
               config.allowUnfree = true;
             };
+            logseq = (import nixpkgs-logseq-pr {
+              system = final.stdenv.hostPlatform.system;
+              config.allowUnfree = true;
+              config.permittedInsecurePackages = [
+                "electron-39.8.10"
+              ];
+            }).logseq;
           })
         ];
       };
@@ -53,10 +68,6 @@
             plasma-manager.homeModules.plasma-manager
             ../users/${username}/main-home-manager.nix
             {
-              nixpkgs.config.permittedInsecurePackages = [
-                "electron-39.8.10" # required by logseq
-              ];
-              nixpkgs.config.allowUnfree = true;
               home.username = username;
               home.homeDirectory = "/home/${username}";
               home.sessionVariables.NH_HOME_FLAKE = "github:KeeTraxx/k-nixos?dir=home-manager-only";
