@@ -14,5 +14,5 @@ in
 {
   home.packages = [ scripts ];
 
-  home.file.".ssh/ssh-config".source = ./ssh/ssh-config;
+  home.file.".ssh/config".source = ./ssh/config;
 }
