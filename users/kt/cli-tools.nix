@@ -41,6 +41,7 @@
     pipenv
     uv # python package manager
     pylint # python linter
+    unstable.herdr
 
     # Infrastructure and Cloud Tools
     opentofu

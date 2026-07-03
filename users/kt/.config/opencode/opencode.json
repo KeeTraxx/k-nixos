@@ -18,8 +18,8 @@
         "qwen3": {
           "name": "ai/qwen3"
         },
-        "mistral": {
-          "name": "ai/mistral"
+        "gemma4": {
+          "name": "ai/gemma4"
         }
       }
     }
