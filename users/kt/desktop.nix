@@ -13,6 +13,7 @@
     (config.nixGLWrap keepassxc)
     (config.nixGLWrap jetbrains.idea-oss)
     (config.nixGLWrap teams-for-linux)
+    (config.nixGLWrap slack)
   ];
   home.shellAliases = {
     zed = "zeditor";
