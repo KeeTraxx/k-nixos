@@ -58,6 +58,7 @@
     awscli2
     kubernetes-helm
     talosctl
+    yamlfmt
 
     # nix specific
     home-manager
