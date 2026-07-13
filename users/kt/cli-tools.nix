@@ -30,6 +30,7 @@
     qrencode # qr code generator
     eza # better ls
     zellij # terminal multiplexer
+    unstable.herdr
 
     # Development Tools
     ripgrep # fast recursive grep. run with rgrep

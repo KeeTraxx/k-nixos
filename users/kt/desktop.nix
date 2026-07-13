@@ -3,7 +3,7 @@
   home.packages = with pkgs; [
     (config.nixGLWrap mesa-demos) # glxgears
     (config.nixGLWrap vulkan-tools) # vkcube vkgears
-    (config.nixGLWrap godot)
+    (config.nixGLWrap unstable.godot)
     (config.nixGLWrap logseq)
     (config.nixGLWrap drawio)
     (config.nixGLWrap unstable.zed-editor)
