@@ -10,7 +10,6 @@
         theme = "breeze_cursors";
         size = 24;
       };
-      iconTheme = "breeze-dark";
       # wallpaper = "~/Pictures/wallpaper.jpg"; # replace with your wallpaper path
     };
 
