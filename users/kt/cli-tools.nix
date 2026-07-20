@@ -68,5 +68,6 @@
     nvd
     nh
     nixos-rebuild
+    nix-tree
   ];
 }

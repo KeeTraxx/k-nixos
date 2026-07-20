@@ -32,3 +32,11 @@ nix-janitor:
     just pin-gcroots
     home-manager expire-generations "-30 days"
     nix-collect-garbage   # as yourself, no sudo
+
+nix-tree:
+    #!/usr/bin/env bash
+    if command -v nixos-version &>/dev/null; then
+        nix-tree $(nix eval --raw .#$(hostname).activationPackage)
+    else
+        nix-tree $(nix eval --raw .#homeConfigurations.$(whoami).activationPackage) --impure
+    fi
