@@ -34,7 +34,7 @@
       "npm": "@ai-sdk/anthropic",
       "name": "MiniMax",
       "options": {
-        "baseURL": "https://api.minimax.io/anthropic",
+        "baseURL": "https://api.minimax.io/anthropic/v1",
         "apiKey": "{file:~/.secrets/opencode/minimax-key}"
       },
       "models": {
