@@ -30,7 +30,8 @@
     qrencode # qr code generator
     eza # better ls
     zellij # terminal multiplexer
-    unstable.herdr
+    unstable.herdr # terminal multiplexer for harnesses
+    lazygit # git management
 
     # Development Tools
     ripgrep # fast recursive grep. run with rgrep
