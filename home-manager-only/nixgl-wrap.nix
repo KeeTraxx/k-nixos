@@ -1,4 +1,18 @@
 { pkgs, lib, osConfig ? null, nixGLWrapper ? null, config, ... }:
+let
+  # NVIDIA's libEGL loads Wayland/X11 window system support as separate "EGL
+  # external platform" libraries. nixGL's nvidia package doesn't ship them, and
+  # the host copies in /usr/lib are invisible to nix binaries (they resolve
+  # against the nix store glibc, which never searches /usr/lib). Without them
+  # eglGetPlatformDisplay fails, e.g. ghostty aborts with
+  # "failed to make GL context current: Failed to create EGL display".
+  # Point the driver at the nixpkgs builds instead; the config dirs replace the
+  # host defaults, whose entries we cannot load anyway.
+  eglPlatformConfigDirs = lib.concatMapStringsSep ":" (p: "${p}/share/egl/egl_external_platform.d") [
+    pkgs.egl-wayland
+    pkgs.egl-x11
+  ];
+in
 {
   options.nixGLWrap = lib.mkOption {
     type = lib.types.functionTo lib.types.package;
@@ -15,7 +29,8 @@
         nixgl_bin=$(echo ${nixGLWrapper}/bin/*)
         for bin in ${pkg}/bin/*; do
           makeWrapper "$nixgl_bin" $out/bin/$(basename $bin) \
-            --add-flags "$bin"
+            --add-flags "$bin" \
+            --set __EGL_EXTERNAL_PLATFORM_CONFIG_DIRS "${eglPlatformConfigDirs}"
         done
         for dir in lib etc; do
           if [ -d "${pkg}/$dir" ]; then
