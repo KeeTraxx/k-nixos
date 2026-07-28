@@ -12,6 +12,14 @@ let
     pkgs.egl-wayland
     pkgs.egl-x11
   ];
+
+  # nixGLNvidia pins __EGL_VENDOR_LIBRARY_FILENAMES to the NVIDIA ICD alone, so
+  # libglvnd has no vendor to fall back on when the display is not NVIDIA. On a
+  # hybrid laptop the compositor usually drives the Intel/AMD GPU, and
+  # eglGetPlatformDisplay then fails outright (EGL_SUCCESS but EGL_NO_DISPLAY)
+  # rather than falling back. nixGL appends to this variable when it is already
+  # set, so seeding Mesa's ICD here keeps NVIDIA first and Mesa as the fallback.
+  mesaVendorConfig = "${lib.getOutput "out" pkgs.mesa}/share/glvnd/egl_vendor.d/50_mesa.json";
 in
 {
   options.nixGLWrap = lib.mkOption {
@@ -30,7 +38,8 @@ in
         for bin in ${pkg}/bin/*; do
           makeWrapper "$nixgl_bin" $out/bin/$(basename $bin) \
             --add-flags "$bin" \
-            --set __EGL_EXTERNAL_PLATFORM_CONFIG_DIRS "${eglPlatformConfigDirs}"
+            --set __EGL_EXTERNAL_PLATFORM_CONFIG_DIRS "${eglPlatformConfigDirs}" \
+            --set __EGL_VENDOR_LIBRARY_FILENAMES "${mesaVendorConfig}"
         done
         for dir in lib etc; do
           if [ -d "${pkg}/$dir" ]; then
