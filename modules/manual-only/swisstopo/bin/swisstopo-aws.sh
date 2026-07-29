@@ -41,7 +41,16 @@ get_access_token() {
 ACCESS_TOKEN=$(get_access_token)
 if [[ -z "$ACCESS_TOKEN" ]]; then
     echo -e "${YELLOW}No valid SSO session found, logging in...${NC}"
-    aws sso login --start-url "$SSO_START_URL" --sso-region "$SSO_REGION"
+    # `aws sso login` has no --start-url/--sso-region flags; it reads them from
+    # the config file. Bootstrap a throwaway profile so we can log in before
+    # $OUTPUT_FILE exists. A legacy profile (rather than an [sso-session]) keeps
+    # the token cached under the start URL, which is the key get_access_token
+    # and the generated profiles below look up.
+    bootstrap_config=$(mktemp)
+    trap 'rm -f "$bootstrap_config"' EXIT
+    printf '[profile bootstrap]\nsso_start_url = %s\nsso_region = %s\n' \
+        "$SSO_START_URL" "$SSO_REGION" > "$bootstrap_config"
+    AWS_CONFIG_FILE="$bootstrap_config" aws sso login --profile bootstrap
     ACCESS_TOKEN=$(get_access_token)
     if [[ -z "$ACCESS_TOKEN" ]]; then
         echo -e "${RED}Failed to obtain SSO access token.${NC}"
