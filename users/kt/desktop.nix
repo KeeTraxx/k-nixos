@@ -11,7 +11,7 @@
     nerd-fonts.jetbrains-mono
     nerd-fonts.hack
     (config.nixGLWrap keepassxc)
-    (config.nixGLWrap jetbrains.idea-oss)
+    (config.nixGLWrap jetbrains.idea)
     (config.nixGLWrap teams-for-linux)
     (config.nixGLWrap slack)
     (config.nixGLWrap ghostty)
