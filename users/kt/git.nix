@@ -9,6 +9,15 @@
       pull.rebase = true;
       rebase.autoStash = true;
     };
+    includes = [
+      {
+        condition = "gitdir:~/projects/swisstopo/";
+        contents.user = {
+          name = "Khôi Tran";
+          email = "khoi.tran@swisstopo.ch";
+        };
+      }
+    ];
     lfs.enable = true;
   };
 }

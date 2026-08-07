@@ -4,6 +4,7 @@
     ./config-files.nix
     ./plasma-manager-config.nix
     ./git.nix
+    ./jj.nix
     ./fish.nix
     ./rust.nix
     ../../modules/manual-only/swisstopo/swisstopo.nix

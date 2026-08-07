@@ -32,6 +32,7 @@
     zellij # terminal multiplexer
     unstable.herdr # terminal multiplexer for harnesses
     lazygit # git management
+    jjui # jj-vcs ui
 
     # Development Tools
     ripgrep # fast recursive grep. run with rgrep
