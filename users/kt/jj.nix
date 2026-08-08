@@ -8,6 +8,22 @@ in
     settings = {
       user.name = "Khôi Tran";
       user.email = "kt@compile.ch";
+
+      remotes.origin = {
+        # Track every bookmark pushed to origin, not just the ones fetched at
+        # clone time.
+        auto-track-bookmarks = "*";
+        # Bookmarks created locally track origin too, like git's
+        # push.autoSetupRemote.
+        auto-track-created-bookmarks = "*";
+      };
+
+      # Refuse to push scratch commits.
+      git.private-commits = ''description(glob:"wip:*") | description(glob:"private:*")'';
+
+      # jj errors out instead of snapshotting new files above this size; the
+      # 1MiB default is easy to trip over in repos with binaries.
+      snapshot.max-new-file-size = "10MiB";
     };
   };
 
