@@ -6,7 +6,7 @@
     globalConfig = {
       tools = {
         node = [
-          "lts"
+          "24"
         ];
       };
       settings = {
