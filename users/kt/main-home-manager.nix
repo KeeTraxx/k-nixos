@@ -13,6 +13,7 @@
     ./cli-tools.nix
     ./zed.nix
     ./mise.nix
+    ./ghostty.nix
   ];
   fonts.fontconfig.enable = true;
 

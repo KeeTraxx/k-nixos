@@ -32,7 +32,18 @@ in
     if osConfig ? system.stateVersion then
       pkg
     else
-      pkgs.runCommand "${pkg.name}-nixgl" { nativeBuildInputs = [ pkgs.makeWrapper ]; } ''
+      pkgs.runCommand "${pkg.name}-nixgl"
+        {
+          nativeBuildInputs = [ pkgs.makeWrapper ];
+          # runCommand drops the wrapped package's meta, which loses
+          # mainProgram and makes lib.getExe warn. The wrapper recreates every
+          # binary under its original basename, so mainProgram still applies.
+          # Only carry that one field: the rest of meta describes the original
+          # derivation, and outputsToInstall in particular names outputs (man,
+          # dev, ...) that this single-output wrapper does not produce.
+          meta = lib.optionalAttrs (pkg.meta ? mainProgram) { inherit (pkg.meta) mainProgram; };
+        }
+        ''
         mkdir -p $out/bin
         nixgl_bin=$(echo ${nixGLWrapper}/bin/*)
         for bin in ${pkg}/bin/*; do

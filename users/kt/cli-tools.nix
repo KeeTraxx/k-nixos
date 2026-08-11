@@ -36,6 +36,7 @@
 
     # Development Tools
     ripgrep # fast recursive grep. run with rgrep
+    bfs # breadth first search - like find, but breadth first
     just # command runner
     rustup
     jq
