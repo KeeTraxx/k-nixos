@@ -1,6 +1,10 @@
 { ... }: {
   programs.git = {
     enable = true;
+    ignores = [
+      ".idea/"
+      "**/.claude/settings.local.json"
+    ];
     settings = {
       user.name = "Khôi Tran";
       user.email = "kt@compile.ch";

@@ -51,6 +51,7 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
+              home-manager.backupFileExtension = "backup";
               home-manager.sharedModules = [ plasma-manager.homeModules.plasma-manager ];
               # Expose unstable packages as pkgs.unstable everywhere,
               # including home-manager (via useGlobalPkgs).
