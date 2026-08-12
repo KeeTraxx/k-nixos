@@ -3,12 +3,19 @@ default: nixos-update-local
 nix-validate:
     nix flake check --no-build
 
+# HOME_MANAGER_BACKUP_EXT is the standalone equivalent of the NixOS module's
+# home-manager.backupFileExtension (which only sets this env var). The option
+# does not exist in homeManagerConfiguration, and nh has no -b flag, so it has
+# to be passed through the environment. Without it, activation aborts whenever
+# a config newly manages a path that already holds an unmanaged file.
+# Deliberately no HOME_MANAGER_BACKUP_OVERWRITE: a leftover .backup should
+# surface as an error rather than be silently discarded.
 nixos-update-local:
     #!/usr/bin/env bash
     if command -v nixos-version &>/dev/null; then
         nh os switch .#$(hostname)
     else
-        nh home switch ./home-manager-only -c $(whoami) --impure
+        HOME_MANAGER_BACKUP_EXT=backup nh home switch ./home-manager-only -c $(whoami) --impure
     fi
     just pin-gcroots
 
