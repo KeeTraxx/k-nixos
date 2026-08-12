@@ -14,6 +14,7 @@
     ./zed.nix
     ./mise.nix
     ./ghostty.nix
+    ./ai-agent.nix
   ];
   fonts.fontconfig.enable = true;
 
