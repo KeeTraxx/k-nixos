@@ -81,8 +81,8 @@ Format the description in markdown with these H2 sections:
 
 ## Technical todo
 
-- [ ] [step 1]
-- [ ] [step 2]
+- [step 1]
+- [step 2]
 - ...
 ```
 
