@@ -46,6 +46,7 @@
     uv # python package manager
     pylint # python linter
     unstable.herdr
+    k6
 
     # Infrastructure and Cloud Tools
     opentofu
