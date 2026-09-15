@@ -10,6 +10,7 @@
     ../../modules/optional/kde.nix
     ../../modules/optional/niri.nix
     ../../modules/optional/desktop-apps.nix
+    ../../modules/optional/steam.nix
     ../../users/ft/main-nixos.nix
     ../../users/kt/main-nixos.nix
   ];

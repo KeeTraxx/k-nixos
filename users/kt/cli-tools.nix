@@ -33,6 +33,7 @@
     unstable.herdr # terminal multiplexer for harnesses
     lazygit # git management
     jjui # jj-vcs ui
+    iftop # network traffic monitor
 
     # Development Tools
     ripgrep # fast recursive grep. run with rgrep

@@ -48,7 +48,8 @@
             disko.nixosModules.disko
             ./hosts/${hostname}/nixos-base.nix
             home-manager.nixosModules.home-manager
-            {
+            ({ pkgs, ... }: {
+              boot.kernelPackages = pkgs.linuxPackages_latest;
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.backupFileExtension = "backup";
@@ -70,7 +71,7 @@
                   }).logseq;
                 })
               ];
-            }
+            })
           ];
         };
     in

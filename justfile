@@ -31,9 +31,10 @@ nix-flake-update:
 pin-gcroots:
     #!/usr/bin/env bash
     set -euo pipefail
+    profile=$(readlink -f ~/.local/state/nix/profiles/profile 2>/dev/null) || exit 0
+    [[ "$profile" == /nix/store/* ]] || exit 0
     mkdir -p ~/.local/state/nix/gcroots-mine
-    nix-store --add-root ~/.local/state/nix/gcroots-mine/profile --indirect \
-        -r "$(readlink -f ~/.local/state/nix/profiles/profile)"
+    nix-store --add-root ~/.local/state/nix/gcroots-mine/profile --indirect -r "$profile"
 
 nix-janitor:
     just pin-gcroots
