@@ -11,6 +11,7 @@
     ../../modules/optional/niri.nix
     ../../modules/optional/desktop-apps.nix
     ../../modules/optional/steam.nix
+    ../../modules/optional/adb.nix
     ../../users/ft/main-nixos.nix
     ../../users/kt/main-nixos.nix
   ];
