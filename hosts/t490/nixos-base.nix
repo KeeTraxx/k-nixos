@@ -12,6 +12,7 @@
     ../../modules/optional/desktop-apps.nix
     ../../modules/optional/steam.nix
     ../../modules/optional/adb.nix
+    ../../modules/optional/tailscale.nix
     ../../users/ft/main-nixos.nix
     ../../users/kt/main-nixos.nix
   ];

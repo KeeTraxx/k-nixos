@@ -15,6 +15,7 @@
     (config.nixGLWrap teams-for-linux)
     (config.nixGLWrap slack)
     (config.nixGLWrap qgis)
+    (config.nixGLWrap blender)
   ];
   home.shellAliases = {
     zed = "zeditor";
