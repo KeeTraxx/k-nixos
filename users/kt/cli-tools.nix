@@ -63,7 +63,7 @@
     summon
     awscli2
     kubernetes-helm
-    talosctl
+    unstable.talosctl
     yamlfmt
 
     # nix specific
