@@ -9,7 +9,7 @@
 
     settings = {
       font-size = 14;
-      font-family = "Hack Nerd Font";
+      font-family = "FantasqueSansM Nerd Font";
 
       # Set to true to get the window frame/titlebar back.
       window-decoration = true;

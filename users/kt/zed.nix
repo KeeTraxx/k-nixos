@@ -8,6 +8,18 @@
     zed = "zeditor";
   };
 
+  # Only manage settings; zed itself is installed above (nixGL-wrapped).
+  # mutableUserSettings (default) merges these keys into the existing
+  # settings.json on each switch, so settings changed in zed are kept.
+  programs.zed-editor = {
+    enable = true;
+    package = null;
+    userSettings = {
+      buffer_font_family = "FantasqueSansM Nerd Font";
+      terminal.font_family = "FantasqueSansM Nerd Font";
+    };
+  };
+
   xdg.desktopEntries."dev.zed.Zed" = {
     name = "Zed";
     genericName = "Text Editor";

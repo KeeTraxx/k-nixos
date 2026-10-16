@@ -7,6 +7,13 @@
     source = ./tide.fish;
   };
 
+  # Replaces the block `pnpm setup` appends to config.fish, which would turn the
+  # home-manager symlink into a regular file and break activation.
+  home.sessionVariables.PNPM_HOME = "$HOME/.local/share/pnpm";
+  home.sessionPath = [
+    "$HOME/.local/share/pnpm/bin"
+  ];
+
   programs.fish = {
     enable = true;
     shellAliases = {

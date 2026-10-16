@@ -67,6 +67,7 @@
           modules = [
             plasma-manager.homeModules.plasma-manager
             ../users/${username}/main-home-manager.nix
+            ./fonts.nix
             {
               home.username = username;
               home.homeDirectory = "/home/${username}";

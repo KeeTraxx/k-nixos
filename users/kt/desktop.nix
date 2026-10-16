@@ -7,9 +7,6 @@
     (config.nixGLWrap logseq)
     (config.nixGLWrap drawio)
     (config.nixGLWrap unstable.zed-editor)
-    nerd-fonts.fira-code
-    nerd-fonts.jetbrains-mono
-    nerd-fonts.hack
     (config.nixGLWrap keepassxc)
     (config.nixGLWrap jetbrains.idea)
     (config.nixGLWrap teams-for-linux)

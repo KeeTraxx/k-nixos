@@ -28,7 +28,7 @@ in
         include = "${pkgs.foot.themes}/share/foot/themes/kitty";
         term = "kitty";
         initial-window-size-chars = "128x40";
-        font = "Hack Nerd Font:size=14";
+        font = "FantasqueSansM Nerd Font:size=14";
       };
     };
   };
