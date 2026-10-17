@@ -57,12 +57,18 @@
         ];
       };
 
+      # CI runners have no NVIDIA driver for nixGL to auto-detect, so allow
+      # pinning the version via env (only visible with --impure).
+      nvidiaVersion = builtins.getEnv "NIXGL_NVIDIA_VERSION";
+      nixglPkgs =
+        if nvidiaVersion == "" then pkgs.nixgl else import nixgl { inherit pkgs nvidiaVersion; };
+
       mkHome =
         username:
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           extraSpecialArgs = {
-            nixGLWrapper = pkgs.nixgl.auto.nixGLNvidia;
+            nixGLWrapper = nixglPkgs.auto.nixGLNvidia;
           };
           modules = [
             plasma-manager.homeModules.plasma-manager
