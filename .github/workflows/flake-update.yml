@@ -3,8 +3,8 @@ name: Update flake.lock
 on:
   workflow_dispatch:
   schedule:
-    # every Monday at 06:00 UTC
-    - cron: "0 2 * * 6"
+    # every Friday at 17:00 UTC
+    - cron: "0 17 * * 5"
 
 permissions:
   contents: write
@@ -18,14 +18,22 @@ jobs:
         include:
           - flake-dir: "."
             slug: "root"
+            eval-attr: "nixosConfigurations"
+            eval-apply: "cs: builtins.mapAttrs (_: c: c.config.system.build.toplevel.drvPath) cs"
+            eval-flags: ""
           - flake-dir: "home-manager-only"
             slug: "home-manager-only"
+            eval-attr: "homeConfigurations"
+            eval-apply: "cs: builtins.mapAttrs (_: c: c.activationPackage.drvPath) cs"
+            # nixGL reads the host's NVIDIA driver version impurely
+            eval-flags: "--impure"
     steps:
       - uses: actions/checkout@v5
 
       - uses: DeterminateSystems/nix-installer-action@main
 
       - name: Update flake.lock
+        id: update
         uses: DeterminateSystems/update-flake-lock@main
         with:
           path-to-flake-dir: ${{ matrix.flake-dir }}
@@ -34,3 +42,27 @@ jobs:
           pr-labels: |
             dependencies
             automated
+
+      - name: Check out PR branch
+        if: steps.update.outputs.pull-request-number != ''
+        uses: actions/checkout@v5
+        with:
+          ref: update-flake-lock-${{ matrix.slug }}
+
+      # Evaluate every configuration so option renames/removals and missing
+      # packages fail the job before anything is merged.
+      - name: Evaluate configurations
+        if: steps.update.outputs.pull-request-number != ''
+        working-directory: ${{ matrix.flake-dir }}
+        run: |
+          nix eval ${{ matrix.eval-flags }} --json \
+            '.#${{ matrix.eval-attr }}' \
+            --apply '${{ matrix.eval-apply }}'
+
+      - name: Merge PR
+        if: steps.update.outputs.pull-request-number != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh pr merge ${{ steps.update.outputs.pull-request-number }} \
+            --squash --delete-branch
